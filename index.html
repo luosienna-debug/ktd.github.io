@@ -1,0 +1,1029 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>新疆国际融合算力中心</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', 'Microsoft YaHei', sans-serif;
+        }
+        
+        :root {
+            --primary: #00c6ff;
+            --secondary: #0072ff;
+            --accent: #00ffcc;
+            --dark: #0a0e17;
+            --darker: #05070c;
+            --light: #e6f7ff;
+            --gray: #8a9ba8;
+        }
+        
+        body {
+            background-color: var(--darker);
+            color: var(--light);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* 科技感背景 */
+        .tech-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            opacity: 0.6;
+        }
+        
+        .grid-lines {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                linear-gradient(rgba(0, 198, 255, 0.1) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 198, 255, 0.1) 1px, transparent 1px);
+            background-size: 50px 50px;
+            animation: gridMove 20s linear infinite;
+        }
+        
+        .floating-elements {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+        }
+        
+        .floating-element {
+            position: absolute;
+            background: rgba(0, 198, 255, 0.1);
+            border-radius: 50%;
+            filter: blur(40px);
+            animation: float 15s infinite ease-in-out;
+        }
+        
+        .floating-element:nth-child(1) {
+            width: 300px;
+            height: 300px;
+            top: 10%;
+            left: 10%;
+            animation-delay: 0s;
+        }
+        
+        .floating-element:nth-child(2) {
+            width: 200px;
+            height: 200px;
+            top: 60%;
+            right: 10%;
+            animation-delay: 5s;
+        }
+        
+        .floating-element:nth-child(3) {
+            width: 150px;
+            height: 150px;
+            bottom: 20%;
+            left: 20%;
+            animation-delay: 10s;
+        }
+        
+        @keyframes gridMove {
+            0% {
+                transform: translate(0, 0);
+            }
+            100% {
+                transform: translate(50px, 50px);
+            }
+        }
+        
+        @keyframes float {
+            0%, 100% {
+                transform: translate(0, 0) scale(1);
+            }
+            50% {
+                transform: translate(30px, -30px) scale(1.1);
+            }
+        }
+        
+        /* 头部样式 */
+        header {
+            background: rgba(10, 14, 23, 0.8);
+            backdrop-filter: blur(10px);
+            color: white;
+            padding: 1rem 0;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 1px solid rgba(0, 198, 255, 0.2);
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .logo-icon {
+            font-size: 2.5rem;
+            color: var(--accent);
+            text-shadow: 0 0 10px var(--accent);
+        }
+        
+        .logo-text {
+            font-size: 1.8rem;
+            font-weight: 700;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .logo-subtitle {
+            font-size: 0.9rem;
+            opacity: 0.9;
+            color: var(--gray);
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 25px;
+        }
+        
+        nav a {
+            color: var(--light);
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s;
+            padding: 5px 10px;
+            border-radius: 4px;
+            position: relative;
+        }
+        
+        nav a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--accent);
+            transition: width 0.3s;
+        }
+        
+        nav a:hover, nav a.active {
+            color: var(--accent);
+        }
+        
+        nav a:hover::after, nav a.active::after {
+            width: 100%;
+        }
+        
+        .language-switch {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .lang-btn {
+            background: transparent;
+            border: 1px solid rgba(0, 198, 255, 0.3);
+            color: var(--light);
+            padding: 5px 15px;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .lang-btn.active {
+            background: rgba(0, 198, 255, 0.2);
+            border-color: var(--primary);
+            color: var(--primary);
+        }
+        
+        /* 主内容区域 */
+        .hero {
+            position: relative;
+            background: linear-gradient(rgba(5, 7, 12, 0.8), rgba(5, 7, 12, 0.9)), 
+                        url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><rect width="100" height="100" fill="%2305070c"/><path d="M0,0 L100,100 M100,0 L0,100" stroke="%23007aff" stroke-width="0.5"/></svg>');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            text-align: center;
+            padding: 150px 0;
+            margin-bottom: 50px;
+            overflow: hidden;
+        }
+        
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at center, rgba(0, 198, 255, 0.1) 0%, transparent 70%);
+            animation: pulse 8s infinite alternate;
+        }
+        
+        @keyframes pulse {
+            0% {
+                opacity: 0.3;
+            }
+            100% {
+                opacity: 0.7;
+            }
+        }
+        
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+            background: linear-gradient(90deg, var(--light), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 20px rgba(0, 255, 204, 0.5);
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 800px;
+            margin: 0 auto 30px;
+            opacity: 0.9;
+            color: var(--gray);
+        }
+        
+        .btn {
+            display: inline-block;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 12px 30px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s;
+            border: none;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+        
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            transition: left 0.5s;
+            z-index: -1;
+        }
+        
+        .btn:hover::before {
+            left: 100%;
+        }
+        
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0, 198, 255, 0.3);
+        }
+        
+        .section {
+            padding: 100px 0;
+            position: relative;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 50px;
+            font-size: 2.5rem;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            position: relative;
+            display: inline-block;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--primary), transparent);
+        }
+        
+        .section-subtitle {
+            text-align: center;
+            margin-bottom: 30px;
+            color: var(--gray);
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+            font-size: 1.1rem;
+        }
+        
+        .content-card {
+            background: rgba(10, 14, 23, 0.7);
+            border-radius: 15px;
+            padding: 40px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(0, 198, 255, 0.1);
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .content-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, transparent, rgba(0, 198, 255, 0.05), transparent);
+            z-index: 0;
+        }
+        
+        .content-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(0, 198, 255, 0.2);
+            border-color: rgba(0, 198, 255, 0.3);
+        }
+        
+        .content-card h3 {
+            color: var(--accent);
+            margin-bottom: 20px;
+            font-size: 1.8rem;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .content-card p {
+            position: relative;
+            z-index: 1;
+            color: var(--light);
+            line-height: 1.8;
+        }
+        
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+        
+        .feature {
+            text-align: center;
+            padding: 40px 20px;
+            background: rgba(10, 14, 23, 0.7);
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(0, 198, 255, 0.1);
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .feature::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, transparent, rgba(0, 198, 255, 0.05), transparent);
+            z-index: 0;
+        }
+        
+        .feature:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(0, 198, 255, 0.2);
+            border-color: rgba(0, 198, 255, 0.3);
+        }
+        
+        .feature-icon {
+            font-size: 3.5rem;
+            color: var(--primary);
+            margin-bottom: 20px;
+            text-shadow: 0 0 15px var(--primary);
+            position: relative;
+            z-index: 1;
+        }
+        
+        .feature h3 {
+            color: var(--accent);
+            margin-bottom: 15px;
+            font-size: 1.5rem;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .feature p {
+            color: var(--gray);
+            position: relative;
+            z-index: 1;
+        }
+        
+        .contact-info {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 30px;
+            justify-content: center;
+            margin-top: 40px;
+        }
+        
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            background: rgba(10, 14, 23, 0.7);
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(0, 198, 255, 0.1);
+            min-width: 250px;
+            transition: all 0.3s;
+        }
+        
+        .contact-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0, 198, 255, 0.2);
+            border-color: rgba(0, 198, 255, 0.3);
+        }
+        
+        .contact-icon {
+            font-size: 2.5rem;
+            color: var(--primary);
+            text-shadow: 0 0 10px var(--primary);
+        }
+        
+        .contact-item div h4 {
+            color: var(--accent);
+            margin-bottom: 5px;
+            font-size: 1.2rem;
+        }
+        
+        /* 数据可视化元素 */
+        .stats {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            margin-top: 50px;
+            gap: 20px;
+        }
+        
+        .stat-item {
+            text-align: center;
+            padding: 30px;
+            background: rgba(10, 14, 23, 0.7);
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(0, 198, 255, 0.1);
+            min-width: 200px;
+            transition: all 0.3s;
+        }
+        
+        .stat-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0, 198, 255, 0.2);
+            border-color: rgba(0, 198, 255, 0.3);
+        }
+        
+        .stat-number {
+            font-size: 3rem;
+            font-weight: 700;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 10px;
+        }
+        
+        .stat-label {
+            color: var(--gray);
+            font-size: 1.1rem;
+        }
+        
+        /* 页脚 */
+        footer {
+            background: rgba(5, 7, 12, 0.9);
+            color: white;
+            padding: 60px 0 20px;
+            border-top: 1px solid rgba(0, 198, 255, 0.2);
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+        
+        .footer-section h3 {
+            margin-bottom: 20px;
+            font-size: 1.5rem;
+            color: var(--accent);
+        }
+        
+        .footer-section p {
+            opacity: 0.8;
+            margin-bottom: 15px;
+            color: var(--gray);
+        }
+        
+        .footer-section ul {
+            list-style: none;
+        }
+        
+        .footer-section ul li {
+            margin-bottom: 10px;
+        }
+        
+        .footer-section ul li a {
+            color: var(--gray);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .footer-section ul li a:hover {
+            color: var(--accent);
+        }
+        
+        .footer-bottom {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            opacity: 0.7;
+            font-size: 0.9rem;
+            color: var(--gray);
+        }
+        
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            nav ul {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .hero p {
+                font-size: 1rem;
+            }
+            
+            .section-title {
+                font-size: 2rem;
+            }
+            
+            .stats {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+        
+        .hidden {
+            display: none;
+        }
+        
+        /* 滚动动画 */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.6s, transform 0.6s;
+        }
+        
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body>
+    <!-- 科技感背景 -->
+    <div class="tech-bg">
+        <div class="grid-lines"></div>
+        <div class="floating-elements">
+            <div class="floating-element"></div>
+            <div class="floating-element"></div>
+            <div class="floating-element"></div>
+        </div>
+    </div>
+
+    <!-- 头部 -->
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <i class="fas fa-server logo-icon"></i>
+                    <div>
+                        <div class="logo-text">新疆国际融合算力中心</div>
+                        <div class="logo-subtitle">Xinjiang International Integrated Computing Power Center</div>
+                    </div>
+                </div>
+                
+                <nav>
+                    <ul>
+                        <li><a href="#home" class="active">首页</a></li>
+                        <li><a href="#about">中心简介</a></li>
+                        <li><a href="#features">核心优势</a></li>
+                        <li><a href="#stats">数据中心</a></li>
+                        <li><a href="#contact">联系我们</a></li>
+                    </ul>
+                </nav>
+                
+                <div class="language-switch">
+                    <button class="lang-btn active" id="lang-zh">中文</button>
+                    <button class="lang-btn" id="lang-en">English</button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- 主内容区域 -->
+    <main>
+        <!-- 英雄区域 -->
+        <section class="hero" id="home">
+            <div class="container">
+                <h1 id="hero-title">新疆国际融合算力中心</h1>
+                <p id="hero-desc">西部地区最具代表性的高性能算力枢纽，为科研院所、产业企业以及"一带一路"沿线国家提供高效、可持续的算力支撑。</p>
+                <a href="#about" class="btn">探索更多</a>
+            </div>
+        </section>
+
+        <!-- 关于我们 -->
+        <section class="section" id="about">
+            <div class="container">
+                <h2 class="section-title" id="about-title">中心简介</h2>
+                <p class="section-subtitle" id="about-subtitle">新疆首个国际级融合算力基础设施，由多所高校共建，院士领衔</p>
+                
+                <div class="content-card fade-in">
+                    <h3 id="about-content-title">关于我们</h3>
+                    <p id="about-content">
+                        新疆国际融合算力中心是新疆首个国际级融合算力基础设施，由新疆大学、清华大学、北京大学等多所高校共建，中国工程院院士吾守尔·斯拉木等六位院士领衔，于2025年5月16日在昌吉正式投入运行。中心总算力规模达到10000P，建成后成为西部地区最具代表性的高性能算力枢纽，为科研院所、产业企业以及"一带一路"沿线国家提供高效、可持续的算力支撑。
+                    </p>
+                    <p id="about-content2">
+                        中心依托新疆丰富的风能与光伏资源，全面采用清洁电力供能，配合液冷散热技术，实现PUE值低于1.2，以绿色、低碳、节能为设计核心。在算力调度层面，通过人工智能与算法优化技术，实现任务分配与能耗的动态平衡，显著提升算力资源利用效率，构建智能化、绿色化的算力运行体系。
+                    </p>
+                </div>
+                
+                <div class="content-card fade-in">
+                    <h3 id="development-title">发展模式</h3>
+                    <p id="development-content">
+                        在发展模式上，中心以"科研+算力+应用"为核心架构，形成科学研究、成果转化与产业赋能的闭环生态。科研方面，联合多所高校共建实验平台，为人工智能、气候模拟、能源勘探、卫星遥感等领域提供高性能计算支持；产业方面，为农业、制造业、医疗、物流等行业提供定制化算力服务，加速区域数字化转型进程。
+                    </p>
+                    <p id="development-content2">
+                        作为国家"东数西算"工程中线通道的重要节点，中心在西部形成算力聚合与外溢的战略优势，成为链接东中西部算力资源的重要枢纽。依托"空天地一体化"信息体系，中心进一步向中亚地区延伸算力、算法与数据服务，推动"一带一路"沿线国家在能源、交通、农业、气象等领域的数字合作，共建开放共享的"数字丝绸之路"。
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 核心优势 -->
+        <section class="section" id="features">
+            <div class="container">
+                <h2 class="section-title" id="features-title">核心优势</h2>
+                <p class="section-subtitle" id="features-subtitle">绿色、高效、智能的算力基础设施</p>
+                
+                <div class="features">
+                    <div class="feature fade-in">
+                        <i class="fas fa-leaf feature-icon"></i>
+                        <h3 id="feature1-title">绿色能源</h3>
+                        <p id="feature1-desc">依托新疆丰富的风能与光伏资源，全面采用清洁电力供能，实现PUE值低于1.2。</p>
+                    </div>
+                    
+                    <div class="feature fade-in">
+                        <i class="fas fa-bolt feature-icon"></i>
+                        <h3 id="feature2-title">高效算力</h3>
+                        <p id="feature2-desc">总算力规模达到10000P，通过AI调度优化，实现任务分配与能耗的动态平衡。</p>
+                    </div>
+                    
+                    <div class="feature fade-in">
+                        <i class="fas fa-network-wired feature-icon"></i>
+                        <h3 id="feature3-title">战略节点</h3>
+                        <p id="feature3-desc">作为国家"东数西算"工程中线通道的重要节点，链接东中西部算力资源。</p>
+                    </div>
+                    
+                    <div class="feature fade-in">
+                        <i class="fas fa-globe-asia feature-icon"></i>
+                        <h3 id="feature4-title">国际合作</h3>
+                        <p id="feature4-desc">向中亚地区延伸算力服务，推动"一带一路"沿线国家数字合作，共建"数字丝绸之路"。</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 数据中心 -->
+        <section class="section" id="stats">
+            <div class="container">
+                <h2 class="section-title" id="stats-title">数据中心</h2>
+                <p class="section-subtitle" id="stats-subtitle">先进的数据基础设施与卓越的性能指标</p>
+                
+                <div class="stats">
+                    <div class="stat-item fade-in">
+                        <div class="stat-number">10000P</div>
+                        <div class="stat-label" id="stat1-label">总算力规模</div>
+                    </div>
+                    
+                    <div class="stat-item fade-in">
+                        <div class="stat-number">&lt; 1.2</div>
+                        <div class="stat-label" id="stat2-label">PUE值</div>
+                    </div>
+                    
+                    <div class="stat-item fade-in">
+                        <div class="stat-number">100%</div>
+                        <div class="stat-label" id="stat3-label">清洁能源</div>
+                    </div>
+                    
+                    <div class="stat-item fade-in">
+                        <div class="stat-number">6+</div>
+                        <div class="stat-label" id="stat4-label">院士领衔</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 联系我们 -->
+        <section class="section" id="contact">
+            <div class="container">
+                <h2 class="section-title" id="contact-title">联系我们</h2>
+                <p class="section-subtitle" id="contact-subtitle">欢迎与我们取得联系，了解更多关于算力中心的信息</p>
+                
+                <div class="contact-info">
+                    <div class="contact-item">
+                        <i class="fas fa-map-marker-alt contact-icon"></i>
+                        <div>
+                            <h4 id="address-title">地址</h4>
+                            <p id="address">新疆维吾尔自治区昌吉回族自治州昌吉市昌吉移动IDC机房</p>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-item">
+                        <i class="fas fa-phone contact-icon"></i>
+                        <div>
+                            <h4 id="phone-title">电话</h4>
+                            <p id="phone">0994-2292122</p>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-item">
+                        <i class="fas fa-fax contact-icon"></i>
+                        <div>
+                            <h4 id="fax-title">传真</h4>
+                            <p id="fax">0994-2292122</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- 页脚 -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3 id="footer-title">新疆国际融合算力中心</h3>
+                    <p id="footer-desc">西部地区最具代表性的高性能算力枢纽，为科研院所、产业企业以及"一带一路"沿线国家提供高效、可持续的算力支撑。</p>
+                </div>
+                
+                <div class="footer-section">
+                    <h3 id="quick-links-title">快速链接</h3>
+                    <ul>
+                        <li><a href="#home">首页</a></li>
+                        <li><a href="#about">中心简介</a></li>
+                        <li><a href="#features">核心优势</a></li>
+                        <li><a href="#stats">数据中心</a></li>
+                        <li><a href="#contact">联系我们</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h3 id="contact-info-title">联系信息</h3>
+                    <p><i class="fas fa-map-marker-alt"></i> <span id="footer-address">新疆维吾尔自治区昌吉回族自治州昌吉市</span></p>
+                    <p><i class="fas fa-phone"></i> 0994-2292122</p>
+                    <p><i class="fas fa-fax"></i> 0994-2292122</p>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p id="copyright">&copy; 2025 新疆国际融合算力中心. 保留所有权利.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // 语言切换功能
+        document.getElementById('lang-zh').addEventListener('click', function() {
+            setLanguage('zh');
+            this.classList.add('active');
+            document.getElementById('lang-en').classList.remove('active');
+        });
+        
+        document.getElementById('lang-en').addEventListener('click', function() {
+            setLanguage('en');
+            this.classList.add('active');
+            document.getElementById('lang-zh').classList.remove('active');
+        });
+        
+        // 语言内容
+        const translations = {
+            'zh': {
+                'hero-title': '新疆国际融合算力中心',
+                'hero-desc': '西部地区最具代表性的高性能算力枢纽，为科研院所、产业企业以及"一带一路"沿线国家提供高效、可持续的算力支撑。',
+                'about-title': '中心简介',
+                'about-subtitle': '新疆首个国际级融合算力基础设施，由多所高校共建，院士领衔',
+                'about-content-title': '关于我们',
+                'about-content': '新疆国际融合算力中心是新疆首个国际级融合算力基础设施，由新疆大学、清华大学、北京大学等多所高校共建，中国工程院院士吾守尔·斯拉木等六位院士领衔，于2025年5月16日在昌吉正式投入运行。中心总算力规模达到10000P，建成后成为西部地区最具代表性的高性能算力枢纽，为科研院所、产业企业以及"一带一路"沿线国家提供高效、可持续的算力支撑。',
+                'about-content2': '中心依托新疆丰富的风能与光伏资源，全面采用清洁电力供能，配合液冷散热技术，实现PUE值低于1.2，以绿色、低碳、节能为设计核心。在算力调度层面，通过人工智能与算法优化技术，实现任务分配与能耗的动态平衡，显著提升算力资源利用效率，构建智能化、绿色化的算力运行体系。',
+                'development-title': '发展模式',
+                'development-content': '在发展模式上，中心以"科研+算力+应用"为核心架构，形成科学研究、成果转化与产业赋能的闭环生态。科研方面，联合多所高校共建实验平台，为人工智能、气候模拟、能源勘探、卫星遥感等领域提供高性能计算支持；产业方面，为农业、制造业、医疗、物流等行业提供定制化算力服务，加速区域数字化转型进程。',
+                'development-content2': '作为国家"东数西算"工程中线通道的重要节点，中心在西部形成算力聚合与外溢的战略优势，成为链接东中西部算力资源的重要枢纽。依托"空天地一体化"信息体系，中心进一步向中亚地区延伸算力、算法与数据服务，推动"一带一路"沿线国家在能源、交通、农业、气象等领域的数字合作，共建开放共享的"数字丝绸之路"。',
+                'features-title': '核心优势',
+                'features-subtitle': '绿色、高效、智能的算力基础设施',
+                'feature1-title': '绿色能源',
+                'feature1-desc': '依托新疆丰富的风能与光伏资源，全面采用清洁电力供能，实现PUE值低于1.2。',
+                'feature2-title': '高效算力',
+                'feature2-desc': '总算力规模达到10000P，通过AI调度优化，实现任务分配与能耗的动态平衡。',
+                'feature3-title': '战略节点',
+                'feature3-desc': '作为国家"东数西算"工程中线通道的重要节点，链接东中西部算力资源。',
+                'feature4-title': '国际合作',
+                'feature4-desc': '向中亚地区延伸算力服务，推动"一带一路"沿线国家数字合作，共建"数字丝绸之路"。',
+                'stats-title': '数据中心',
+                'stats-subtitle': '先进的数据基础设施与卓越的性能指标',
+                'stat1-label': '总算力规模',
+                'stat2-label': 'PUE值',
+                'stat3-label': '清洁能源',
+                'stat4-label': '院士领衔',
+                'contact-title': '联系我们',
+                'contact-subtitle': '欢迎与我们取得联系，了解更多关于算力中心的信息',
+                'address-title': '地址',
+                'address': '新疆维吾尔自治区昌吉回族自治州昌吉市昌吉移动IDC机房',
+                'phone-title': '电话',
+                'phone': '0994-2292122',
+                'fax-title': '传真',
+                'fax': '0994-2292122',
+                'footer-title': '新疆国际融合算力中心',
+                'footer-desc': '西部地区最具代表性的高性能算力枢纽，为科研院所、产业企业以及"一带一路"沿线国家提供高效、可持续的算力支撑。',
+                'quick-links-title': '快速链接',
+                'contact-info-title': '联系信息',
+                'footer-address': '新疆维吾尔自治区昌吉回族自治州昌吉市',
+                'copyright': '© 2025 新疆国际融合算力中心. 保留所有权利.'
+            },
+            'en': {
+                'hero-title': 'Xinjiang International Integrated Computing Power Center',
+                'hero-desc': 'A landmark high-performance computing hub in Western China, providing efficient and sustainable computing services to research institutions, industries, and Belt and Road countries.',
+                'about-title': 'Center Introduction',
+                'about-subtitle': 'The first international-level integrated computing infrastructure in Xinjiang',
+                'about-content-title': 'About Us',
+                'about-content': 'The Xinjiang International Integrated Computing Power Center is the first international-level integrated computing infrastructure in Xinjiang. Jointly established by Xinjiang University, Tsinghua University, and Peking University, and led by six academicians including Academician Wushour Silamu of the Chinese Academy of Engineering, the Center was officially launched in Changji on May 16, 2025.',
+                'about-content2': 'Leveraging Xinjiang\'s abundant wind and solar energy, the Center operates entirely on clean power and employs advanced liquid-cooling technology to maintain a PUE below 1.2 and designed with green, low-carbon, and energy-saving principles.',
+                'development-title': 'Development Model',
+                'development-content': 'Following a "Research + Computing Power + Application" framework, the Center builds an integrated ecosystem linking scientific innovation, technological transformation, and industrial collaboration.',
+                'development-content2': 'As a key node of China\'s "Eastern Data, Western Computing" initiative, the Center establishes a strategic advantage in aggregating and extending computing resources in Western China.',
+                'features-title': 'Core Advantages',
+                'features-subtitle': 'Green, efficient, and intelligent computing infrastructure',
+                'feature1-title': 'Green Energy',
+                'feature1-desc': 'Leveraging Xinjiang\'s abundant wind and solar energy, operating entirely on clean power with PUE below 1.2.',
+                'feature2-title': 'High Efficiency',
+                'feature2-desc': 'Total computing power of 10,000P with AI-driven scheduling for optimal task allocation and energy consumption balance.',
+                'feature3-title': 'Strategic Node',
+                'feature3-desc': 'Key node of China\'s "Eastern Data, Western Computing" initiative, linking computing resources across regions.',
+                'feature4-title': 'International Cooperation',
+                'feature4-desc': 'Extending computing services to Central Asia, promoting digital cooperation along the Belt and Road.',
+                'stats-title': 'Data Center',
+                'stats-subtitle': 'Advanced data infrastructure with outstanding performance metrics',
+                'stat1-label': 'Total Computing Power',
+                'stat2-label': 'PUE Value',
+                'stat3-label': 'Clean Energy',
+                'stat4-label': 'Academician Leadership',
+                'contact-title': 'Contact Us',
+                'contact-subtitle': 'Feel free to contact us for more information about the Computing Power Center',
+                'address-title': 'Address',
+                'address': 'Changji Mobile IDC Data Center, Changji City, Changji Hui Autonomous Prefecture, Xinjiang Uygur Autonomous Region',
+                'phone-title': 'Phone',
+                'phone': '0994-2292122',
+                'fax-title': 'Fax',
+                'fax': '0994-2292122',
+                'footer-title': 'Xinjiang International Integrated Computing Power Center',
+                'footer-desc': 'A landmark high-performance computing hub in Western China, providing efficient and sustainable computing services.',
+                'quick-links-title': 'Quick Links',
+                'contact-info-title': 'Contact Information',
+                'footer-address': 'Changji City, Changji Hui Autonomous Prefecture, Xinjiang Uygur Autonomous Region',
+                'copyright': '© 2025 Xinjiang International Integrated Computing Power Center. All rights reserved.'
+            }
+        };
+        
+        function setLanguage(lang) {
+            const elements = document.querySelectorAll('[id]');
+            elements.forEach(element => {
+                const id = element.id;
+                if (translations[lang] && translations[lang][id]) {
+                    element.textContent = translations[lang][id];
+                }
+            });
+            
+            // 更新导航链接文本
+            const navLinks = document.querySelectorAll('nav a');
+            if (lang === 'en') {
+                navLinks[0].textContent = 'Home';
+                navLinks[1].textContent = 'About';
+                navLinks[2].textContent = 'Features';
+                navLinks[3].textContent = 'Data Center';
+                navLinks[4].textContent = 'Contact';
+            } else {
+                navLinks[0].textContent = '首页';
+                navLinks[1].textContent = '中心简介';
+                navLinks[2].textContent = '核心优势';
+                navLinks[3].textContent = '数据中心';
+                navLinks[4].textContent = '联系我们';
+            }
+        }
+        
+        // 初始化语言
+        setLanguage('zh');
+        
+        // 滚动动画
+        const fadeElements = document.querySelectorAll('.fade-in');
+        
+        const fadeInObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.1 });
+        
+        fadeElements.forEach(element => {
+            fadeInObserver.observe(element);
+        });
+        
+        // 平滑滚动
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        // 导航高亮
+        window.addEventListener('scroll', () => {
+            const sections = document.querySelectorAll('section');
+            const navLinks = document.querySelectorAll('nav a');
+            
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+                if (scrollY >= sectionTop - 100) {
+                    current = section.getAttribute('id');
+                }
+            });
+            
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === `#${current}`) {
+                    link.classList.add('active');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
