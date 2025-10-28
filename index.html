@@ -1,1029 +1,937 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>新疆国际融合算力中心</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', 'Microsoft YaHei', sans-serif;
-        }
-        
-        :root {
-            --primary: #00c6ff;
-            --secondary: #0072ff;
-            --accent: #00ffcc;
-            --dark: #0a0e17;
-            --darker: #05070c;
-            --light: #e6f7ff;
-            --gray: #8a9ba8;
-        }
-        
-        body {
-            background-color: var(--darker);
-            color: var(--light);
-            line-height: 1.6;
-            overflow-x: hidden;
-        }
-        
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
-        }
-        
-        /* 科技感背景 */
-        .tech-bg {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
-            opacity: 0.6;
-        }
-        
-        .grid-lines {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-image: 
-                linear-gradient(rgba(0, 198, 255, 0.1) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(0, 198, 255, 0.1) 1px, transparent 1px);
-            background-size: 50px 50px;
-            animation: gridMove 20s linear infinite;
-        }
-        
-        .floating-elements {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-        }
-        
-        .floating-element {
-            position: absolute;
-            background: rgba(0, 198, 255, 0.1);
-            border-radius: 50%;
-            filter: blur(40px);
-            animation: float 15s infinite ease-in-out;
-        }
-        
-        .floating-element:nth-child(1) {
-            width: 300px;
-            height: 300px;
-            top: 10%;
-            left: 10%;
-            animation-delay: 0s;
-        }
-        
-        .floating-element:nth-child(2) {
-            width: 200px;
-            height: 200px;
-            top: 60%;
-            right: 10%;
-            animation-delay: 5s;
-        }
-        
-        .floating-element:nth-child(3) {
-            width: 150px;
-            height: 150px;
-            bottom: 20%;
-            left: 20%;
-            animation-delay: 10s;
-        }
-        
-        @keyframes gridMove {
-            0% {
-                transform: translate(0, 0);
-            }
-            100% {
-                transform: translate(50px, 50px);
-            }
-        }
-        
-        @keyframes float {
-            0%, 100% {
-                transform: translate(0, 0) scale(1);
-            }
-            50% {
-                transform: translate(30px, -30px) scale(1.1);
-            }
-        }
-        
-        /* 头部样式 */
-        header {
-            background: rgba(10, 14, 23, 0.8);
-            backdrop-filter: blur(10px);
-            color: white;
-            padding: 1rem 0;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-            border-bottom: 1px solid rgba(0, 198, 255, 0.2);
-        }
-        
-        .header-content {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        
-        .logo {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
-        
-        .logo-icon {
-            font-size: 2.5rem;
-            color: var(--accent);
-            text-shadow: 0 0 10px var(--accent);
-        }
-        
-        .logo-text {
-            font-size: 1.8rem;
-            font-weight: 700;
-            background: linear-gradient(90deg, var(--primary), var(--accent));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-        
-        .logo-subtitle {
-            font-size: 0.9rem;
-            opacity: 0.9;
-            color: var(--gray);
-        }
-        
-        nav ul {
-            display: flex;
-            list-style: none;
-            gap: 25px;
-        }
-        
-        nav a {
-            color: var(--light);
-            text-decoration: none;
-            font-weight: 500;
-            transition: all 0.3s;
-            padding: 5px 10px;
-            border-radius: 4px;
-            position: relative;
-        }
-        
-        nav a::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 0;
-            height: 2px;
-            background: var(--accent);
-            transition: width 0.3s;
-        }
-        
-        nav a:hover, nav a.active {
-            color: var(--accent);
-        }
-        
-        nav a:hover::after, nav a.active::after {
-            width: 100%;
-        }
-        
-        .language-switch {
-            display: flex;
-            gap: 10px;
-        }
-        
-        .lang-btn {
-            background: transparent;
-            border: 1px solid rgba(0, 198, 255, 0.3);
-            color: var(--light);
-            padding: 5px 15px;
-            border-radius: 20px;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-        
-        .lang-btn.active {
-            background: rgba(0, 198, 255, 0.2);
-            border-color: var(--primary);
-            color: var(--primary);
-        }
-        
-        /* 主内容区域 */
-        .hero {
-            position: relative;
-            background: linear-gradient(rgba(5, 7, 12, 0.8), rgba(5, 7, 12, 0.9)), 
-                        url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><rect width="100" height="100" fill="%2305070c"/><path d="M0,0 L100,100 M100,0 L0,100" stroke="%23007aff" stroke-width="0.5"/></svg>');
-            background-size: cover;
-            background-position: center;
-            color: white;
-            text-align: center;
-            padding: 150px 0;
-            margin-bottom: 50px;
-            overflow: hidden;
-        }
-        
-        .hero::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: radial-gradient(circle at center, rgba(0, 198, 255, 0.1) 0%, transparent 70%);
-            animation: pulse 8s infinite alternate;
-        }
-        
-        @keyframes pulse {
-            0% {
-                opacity: 0.3;
-            }
-            100% {
-                opacity: 0.7;
-            }
-        }
-        
-        .hero h1 {
-            font-size: 3.5rem;
-            margin-bottom: 20px;
-            background: linear-gradient(90deg, var(--light), var(--accent));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            text-shadow: 0 0 20px rgba(0, 255, 204, 0.5);
-        }
-        
-        .hero p {
-            font-size: 1.2rem;
-            max-width: 800px;
-            margin: 0 auto 30px;
-            opacity: 0.9;
-            color: var(--gray);
-        }
-        
-        .btn {
-            display: inline-block;
-            background: linear-gradient(90deg, var(--primary), var(--secondary));
-            color: white;
-            padding: 12px 30px;
-            border-radius: 30px;
-            text-decoration: none;
-            font-weight: 600;
-            transition: all 0.3s;
-            border: none;
-            cursor: pointer;
-            position: relative;
-            overflow: hidden;
-            z-index: 1;
-        }
-        
-        .btn::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
-            transition: left 0.5s;
-            z-index: -1;
-        }
-        
-        .btn:hover::before {
-            left: 100%;
-        }
-        
-        .btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 10px 20px rgba(0, 198, 255, 0.3);
-        }
-        
-        .section {
-            padding: 100px 0;
-            position: relative;
-        }
-        
-        .section-title {
-            text-align: center;
-            margin-bottom: 50px;
-            font-size: 2.5rem;
-            background: linear-gradient(90deg, var(--primary), var(--accent));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            position: relative;
-            display: inline-block;
-            left: 50%;
-            transform: translateX(-50%);
-        }
-        
-        .section-title::after {
-            content: '';
-            position: absolute;
-            bottom: -10px;
-            left: 0;
-            width: 100%;
-            height: 2px;
-            background: linear-gradient(90deg, transparent, var(--primary), transparent);
-        }
-        
-        .section-subtitle {
-            text-align: center;
-            margin-bottom: 30px;
-            color: var(--gray);
-            max-width: 800px;
-            margin-left: auto;
-            margin-right: auto;
-            font-size: 1.1rem;
-        }
-        
-        .content-card {
-            background: rgba(10, 14, 23, 0.7);
-            border-radius: 15px;
-            padding: 40px;
-            margin-bottom: 30px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-            border: 1px solid rgba(0, 198, 255, 0.1);
-            transition: all 0.3s;
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .content-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(45deg, transparent, rgba(0, 198, 255, 0.05), transparent);
-            z-index: 0;
-        }
-        
-        .content-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 15px 40px rgba(0, 198, 255, 0.2);
-            border-color: rgba(0, 198, 255, 0.3);
-        }
-        
-        .content-card h3 {
-            color: var(--accent);
-            margin-bottom: 20px;
-            font-size: 1.8rem;
-            position: relative;
-            z-index: 1;
-        }
-        
-        .content-card p {
-            position: relative;
-            z-index: 1;
-            color: var(--light);
-            line-height: 1.8;
-        }
-        
-        .features {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
-            margin-top: 40px;
-        }
-        
-        .feature {
-            text-align: center;
-            padding: 40px 20px;
-            background: rgba(10, 14, 23, 0.7);
-            border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-            border: 1px solid rgba(0, 198, 255, 0.1);
-            transition: all 0.3s;
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .feature::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(45deg, transparent, rgba(0, 198, 255, 0.05), transparent);
-            z-index: 0;
-        }
-        
-        .feature:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 15px 40px rgba(0, 198, 255, 0.2);
-            border-color: rgba(0, 198, 255, 0.3);
-        }
-        
-        .feature-icon {
-            font-size: 3.5rem;
-            color: var(--primary);
-            margin-bottom: 20px;
-            text-shadow: 0 0 15px var(--primary);
-            position: relative;
-            z-index: 1;
-        }
-        
-        .feature h3 {
-            color: var(--accent);
-            margin-bottom: 15px;
-            font-size: 1.5rem;
-            position: relative;
-            z-index: 1;
-        }
-        
-        .feature p {
-            color: var(--gray);
-            position: relative;
-            z-index: 1;
-        }
-        
-        .contact-info {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 30px;
-            justify-content: center;
-            margin-top: 40px;
-        }
-        
-        .contact-item {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            background: rgba(10, 14, 23, 0.7);
-            padding: 25px;
-            border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-            border: 1px solid rgba(0, 198, 255, 0.1);
-            min-width: 250px;
-            transition: all 0.3s;
-        }
-        
-        .contact-item:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 15px 40px rgba(0, 198, 255, 0.2);
-            border-color: rgba(0, 198, 255, 0.3);
-        }
-        
-        .contact-icon {
-            font-size: 2.5rem;
-            color: var(--primary);
-            text-shadow: 0 0 10px var(--primary);
-        }
-        
-        .contact-item div h4 {
-            color: var(--accent);
-            margin-bottom: 5px;
-            font-size: 1.2rem;
-        }
-        
-        /* 数据可视化元素 */
-        .stats {
-            display: flex;
-            justify-content: space-around;
-            flex-wrap: wrap;
-            margin-top: 50px;
-            gap: 20px;
-        }
-        
-        .stat-item {
-            text-align: center;
-            padding: 30px;
-            background: rgba(10, 14, 23, 0.7);
-            border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-            border: 1px solid rgba(0, 198, 255, 0.1);
-            min-width: 200px;
-            transition: all 0.3s;
-        }
-        
-        .stat-item:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 15px 40px rgba(0, 198, 255, 0.2);
-            border-color: rgba(0, 198, 255, 0.3);
-        }
-        
-        .stat-number {
-            font-size: 3rem;
-            font-weight: 700;
-            background: linear-gradient(90deg, var(--primary), var(--accent));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            margin-bottom: 10px;
-        }
-        
-        .stat-label {
-            color: var(--gray);
-            font-size: 1.1rem;
-        }
-        
-        /* 页脚 */
-        footer {
-            background: rgba(5, 7, 12, 0.9);
-            color: white;
-            padding: 60px 0 20px;
-            border-top: 1px solid rgba(0, 198, 255, 0.2);
-        }
-        
-        .footer-content {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 40px;
-            margin-bottom: 40px;
-        }
-        
-        .footer-section h3 {
-            margin-bottom: 20px;
-            font-size: 1.5rem;
-            color: var(--accent);
-        }
-        
-        .footer-section p {
-            opacity: 0.8;
-            margin-bottom: 15px;
-            color: var(--gray);
-        }
-        
-        .footer-section ul {
-            list-style: none;
-        }
-        
-        .footer-section ul li {
-            margin-bottom: 10px;
-        }
-        
-        .footer-section ul li a {
-            color: var(--gray);
-            text-decoration: none;
-            transition: color 0.3s;
-        }
-        
-        .footer-section ul li a:hover {
-            color: var(--accent);
-        }
-        
-        .footer-bottom {
-            text-align: center;
-            padding-top: 20px;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-            opacity: 0.7;
-            font-size: 0.9rem;
-            color: var(--gray);
-        }
-        
-        /* 响应式设计 */
-        @media (max-width: 768px) {
-            .header-content {
-                flex-direction: column;
-                gap: 15px;
-            }
-            
-            nav ul {
-                flex-wrap: wrap;
-                justify-content: center;
-            }
-            
-            .hero h1 {
-                font-size: 2.5rem;
-            }
-            
-            .hero p {
-                font-size: 1rem;
-            }
-            
-            .section-title {
-                font-size: 2rem;
-            }
-            
-            .stats {
-                flex-direction: column;
-                align-items: center;
-            }
-        }
-        
-        .hidden {
-            display: none;
-        }
-        
-        /* 滚动动画 */
-        .fade-in {
-            opacity: 0;
-            transform: translateY(30px);
-            transition: opacity 0.6s, transform 0.6s;
-        }
-        
-        .fade-in.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-    </style>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>空天地一体化实验室 | Integrated Laboratory for Space, Air, and Ground Systems</title>
+
+  <style>
+    /* ========= 基本重置与变量 ========= */
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    :root{
+      --bg-dark: #04081a;
+      --panel: rgba(10,18,40,0.85);
+      --primary: #0a84ff;
+      --accent: #5ac8fa;
+      --muted: #b9c6d9;
+      --text: #eaf2ff;
+      --glass: rgba(255,255,255,0.04);
+      --spacing-sm: 12px;
+      --spacing-md: 24px;
+      --spacing-lg: 48px;
+      --border-radius: 16px;
+    }
+    html,body { 
+      height:100%; 
+      font-family: "Segoe UI","Microsoft YaHei","Helvetica Neue",Arial,sans-serif; 
+      background:var(--bg-dark); 
+      color:var(--text);
+      scroll-behavior: smooth;
+    }
+
+    /* ========= 顶部导航 ========= */
+    header {
+      position: fixed; top:0; left:0; right:0; z-index:100;
+      height:72px; display:flex; align-items:center; justify-content:space-between;
+      padding:0 28px; 
+      background: linear-gradient(180deg, rgba(3,6,20,0.92), rgba(3,6,20,0.72));
+      border-bottom: 1px solid rgba(10,132,255,0.12); 
+      backdrop-filter: blur(12px);
+    }
+    .brand { display:flex; align-items:center; gap:16px; }
+    .logo { 
+      width:52px; height:52px; 
+      border-radius:12px; 
+      display:flex; align-items:center; justify-content:center; 
+      font-weight:800; color:white; 
+      background:linear-gradient(135deg,var(--primary),var(--accent));
+      box-shadow: 0 8px 24px rgba(10,132,255,0.2);
+    }
+    nav { display:flex; gap:24px; align-items:center; }
+    .nav-link { 
+      color:var(--muted); 
+      text-decoration:none; 
+      font-weight:600; 
+      padding:10px 16px; 
+      border-radius:10px; 
+      transition: all 0.3s ease;
+    }
+    .nav-link:hover { 
+      color:var(--text); 
+      background: rgba(255,255,255,0.05); 
+      transform: translateY(-2px);
+    }
+
+    /* 语言切换按钮 - 修复重叠问题 */
+    .lang { 
+      display:flex; 
+      gap:0; 
+      align-items:center; 
+      background: rgba(255,255,255,0.05);
+      border-radius: 12px;
+      padding: 4px;
+      border: 1px solid rgba(255,255,255,0.1);
+      margin-left: auto;
+    }
+    .lang button { 
+      border: none; 
+      background: transparent; 
+      color:var(--muted); 
+      padding:8px 16px; 
+      border-radius:8px; 
+      cursor:pointer; 
+      font-weight:700;
+      transition: all 0.3s ease;
+      min-width: 70px;
+      z-index: 10; /* 确保按钮在最上层 */
+      position: relative; /* 确保z-index生效 */
+    }
+    .lang button.active { 
+      background:var(--primary); 
+      color:#fff; 
+      box-shadow: 0 4px 12px rgba(10,132,255,0.3);
+    }
+    .lang button:hover:not(.active) {
+      background: rgba(255,255,255,0.05);
+    }
+
+    /* ========= Hero 区 ========= */
+    .hero {
+      height: 85vh; 
+      min-height:520px; 
+      display:flex; 
+      align-items:center; 
+      padding-top:72px;
+      position:relative; 
+      overflow:hidden;
+      background: 
+        radial-gradient(circle at 20% 30%, rgba(10,132,255,0.08), transparent 40%),
+        radial-gradient(circle at 80% 70%, rgba(90,200,250,0.05), transparent 30%),
+        url('https://images.unsplash.com/photo-1446776653964-20c1d3a81b06?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80') center/cover no-repeat;
+    }
+    .hero::before {
+      content:""; 
+      position:absolute; 
+      inset:0; 
+      background: linear-gradient(90deg, rgba(2,6,26,0.82) 0%, rgba(2,6,26,0.45) 50%, rgba(2,6,26,0.88) 100%); 
+      z-index:0;
+    }
+    .hero-inner { 
+      z-index:2; 
+      max-width:1280px; 
+      margin:0 auto; 
+      padding:60px 28px; 
+      display:flex; 
+      gap:40px; 
+      align-items:center; 
+    }
+    .hero-left { flex:1; }
+    .hero-title { 
+      font-size:3.2rem; 
+      line-height:1.1; 
+      font-weight:800; 
+      margin-bottom:16px; 
+      background:linear-gradient(90deg,var(--primary),var(--accent)); 
+      -webkit-background-clip:text; 
+      -webkit-text-fill-color:transparent;
+      text-shadow: 0 4px 12px rgba(10,132,255,0.15);
+    }
+    .hero-sub { 
+      color:var(--muted); 
+      font-size:1.25rem; 
+      line-height:1.6;
+      margin-bottom:28px; 
+      max-width:80%; 
+    }
+
+    /* 小 CTA 区 */
+    .hero-cta { display:flex; gap:16px; align-items:center; margin-top:20px; }
+    .btn { 
+      padding:14px 24px; 
+      border-radius:12px; 
+      border:none; 
+      cursor:pointer; 
+      font-weight:700;
+      font-size: 1rem;
+      transition: all 0.3s ease;
+    }
+    .btn-primary { 
+      background:var(--primary); 
+      color:#fff; 
+      box-shadow: 0 10px 30px rgba(10,132,255,0.2);
+    }
+    .btn-primary:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 15px 35px rgba(10,132,255,0.3);
+    }
+    .btn-ghost { 
+      background:transparent; 
+      color:var(--text); 
+      border:1px solid rgba(255,255,255,0.1);
+    }
+    .btn-ghost:hover {
+      background: rgba(255,255,255,0.05);
+      transform: translateY(-3px);
+    }
+
+    /* hero 右侧示意卡 */
+    .hero-right { width:380px; min-width:280px; }
+    .card {
+      background: linear-gradient(180deg, rgba(255,255,255,0.05), rgba(255,255,255,0.02));
+      border-radius:var(--border-radius); 
+      padding:24px; 
+      border:1px solid rgba(255,255,255,0.06);
+      box-shadow: 0 12px 36px rgba(3,6,20,0.4);
+      backdrop-filter: blur(10px);
+      transition: all 0.3s ease;
+    }
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 18px 42px rgba(3,6,20,0.5);
+    }
+    .card h4{ 
+      color:var(--accent); 
+      margin-bottom:12px; 
+      font-size: 1.2rem;
+    }
+    .card p{ 
+      color:var(--muted); 
+      font-size:1rem; 
+      line-height:1.6; 
+    }
+
+    /* ========= 主体容器（各模块） ========= */
+    main { 
+      max-width:1280px; 
+      margin:var(--spacing-lg) auto 100px; 
+      padding:0 28px; 
+    }
+
+    .section { 
+      margin-bottom:36px; 
+      background:var(--panel); 
+      border-radius:var(--border-radius); 
+      padding:32px; 
+      border:1px solid rgba(10,132,255,0.1); 
+      box-shadow: 0 12px 36px rgba(3,6,20,0.4);
+      backdrop-filter: blur(8px);
+    }
+    .section h3 { 
+      color:var(--accent); 
+      font-size:1.5rem; 
+      margin-bottom:20px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+    }
+    .section p { 
+      color: #dfefff; 
+      line-height:1.75; 
+      font-size:1.05rem;
+      margin-bottom: 16px;
+    }
+
+    /* planning 卡片行 */
+    .cards { 
+      display:flex; 
+      gap:20px; 
+      flex-wrap:wrap; 
+      margin-top:20px; 
+    }
+    .card-mini { 
+      flex:1 1 280px; 
+      min-width:240px; 
+      padding:24px; 
+      border-radius:14px; 
+      background: linear-gradient(180deg, rgba(255,255,255,0.04), rgba(255,255,255,0.01)); 
+      border:1px solid rgba(255,255,255,0.05);
+      transition: all 0.3s ease;
+    }
+    .card-mini:hover {
+      transform: translateY(-5px);
+      background: linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02));
+      box-shadow: 0 10px 30px rgba(3,6,20,0.4);
+    }
+    .card-mini h4{ 
+      color:var(--primary); 
+      margin-bottom:12px; 
+      font-size:1.1rem; 
+    }
+    .card-mini p{ 
+      color:var(--muted); 
+      font-size:0.98rem; 
+      line-height:1.6; 
+    }
+
+    /* projects 列表 */
+    .proj-list { display:block; margin-top:16px; }
+    .proj-item { 
+      background: rgba(10,132,255,0.05); 
+      border-left:6px solid rgba(10,132,255,0.2); 
+      padding:20px; 
+      border-radius:12px; 
+      margin-bottom:16px;
+      transition: all 0.3s ease;
+    }
+    .proj-item:hover {
+      background: rgba(10,132,255,0.08);
+      border-left:6px solid rgba(10,132,255,0.4);
+      transform: translateX(5px);
+    }
+    .proj-item h4{ 
+      margin-bottom:10px; 
+      color:var(--accent); 
+      font-size: 1.2rem;
+    }
+    .proj-item p{ 
+      color:var(--muted); 
+      margin-bottom: 12px;
+    }
+
+    /* 页面切换按钮 */
+    .page-switcher {
+      display: flex;
+      justify-content: center;
+      margin: 40px 0 20px;
+      gap: 16px;
+    }
+    .page-btn {
+      padding: 14px 28px;
+      border-radius: 12px;
+      background: var(--panel);
+      color: var(--text);
+      border: 1px solid rgba(255,255,255,0.1);
+      cursor: pointer;
+      font-weight: 700;
+      transition: all 0.3s ease;
+    }
+    .page-btn.active {
+      background: var(--primary);
+      box-shadow: 0 8px 24px rgba(10,132,255,0.2);
+    }
+    .page-btn:hover:not(.active) {
+      background: rgba(255,255,255,0.05);
+      transform: translateY(-3px);
+    }
+
+    /* 页面内容区域 */
+    .page-content {
+      display: none;
+    }
+    .page-content.active {
+      display: block;
+      animation: fadeIn 0.5s ease;
+    }
+    
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* 特色部分 */
+    .features {
+      display: flex;
+      gap: 20px;
+      margin: 40px 0;
+      flex-wrap: wrap;
+    }
+    .feature {
+      flex: 1;
+      min-width: 250px;
+      text-align: center;
+      padding: 24px;
+      background: rgba(255,255,255,0.02);
+      border-radius: 16px;
+      border: 1px solid rgba(255,255,255,0.05);
+    }
+    .feature-icon {
+      font-size: 2.5rem;
+      margin-bottom: 16px;
+      color: var(--accent);
+    }
+    .feature h4 {
+      color: var(--primary);
+      margin-bottom: 12px;
+    }
+    .feature p {
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    /* 联系我们部分样式 */
+    .contact-info {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 24px;
+      margin-top: 20px;
+    }
+    .contact-item {
+      flex: 1;
+      min-width: 200px;
+      padding: 20px;
+      background: rgba(255,255,255,0.02);
+      border-radius: 12px;
+      border: 1px solid rgba(255,255,255,0.05);
+    }
+    .contact-item h4 {
+      color: var(--accent);
+      margin-bottom: 8px;
+      font-size: 1.1rem;
+    }
+    .contact-item p {
+      color: var(--muted);
+      margin: 0;
+    }
+
+    /* ========= 技术与产品服务部分 ========= */
+    .services-section {
+      margin: 60px 0;
+    }
+    
+    .services-intro {
+      text-align: center;
+      max-width: 800px;
+      margin: 0 auto 40px;
+    }
+    
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 30px;
+      margin-bottom: 40px;
+    }
+    
+    .service-card {
+      background: linear-gradient(135deg, rgba(10, 132, 255, 0.08), rgba(90, 200, 250, 0.05));
+      border-radius: 16px;
+      padding: 30px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      transition: all 0.3s ease;
+      height: 100%;
+    }
+    
+    .service-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 15px 35px rgba(10, 132, 255, 0.2);
+      border-color: rgba(90, 200, 250, 0.3);
+    }
+    
+    .service-icon {
+      font-size: 2.5rem;
+      margin-bottom: 20px;
+      color: var(--accent);
+    }
+    
+    .service-card h4 {
+      color: var(--primary);
+      margin-bottom: 15px;
+      font-size: 1.3rem;
+    }
+    
+    .service-card p {
+      color: var(--muted);
+      line-height: 1.7;
+    }
+    
+    .service-contact {
+      background: rgba(10, 132, 255, 0.05);
+      border-radius: 16px;
+      padding: 30px;
+      text-align: center;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    
+    .service-contact h4 {
+      color: var(--accent);
+      margin-bottom: 20px;
+      font-size: 1.4rem;
+    }
+    
+    .contact-details {
+      display: flex;
+      justify-content: center;
+      gap: 30px;
+      margin-top: 20px;
+      flex-wrap: wrap;
+    }
+    
+    .contact-detail {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 1.1rem;
+    }
+    
+    .contact-icon {
+      font-size: 1.8rem;
+      color: var(--accent);
+    }
+
+    /* footer */
+    footer { 
+      text-align:center; 
+      margin-top:60px; 
+      color:var(--muted); 
+      padding:28px 8px; 
+      border-top: 1px solid rgba(10,132,255,0.08); 
+      font-size: 0.9rem;
+    }
+
+    /* 响应式 */
+    @media (max-width: 1024px){
+      .hero-inner { flex-direction:column; align-items:flex-start; }
+      .hero-right { width:100%; }
+      .hero-sub { max-width:100%; }
+    }
+    
+    @media (max-width: 768px){
+      header { padding: 0 16px; }
+      nav { display:none; }
+      .hero { height: auto; min-height: 500px; padding: 100px 0 60px; }
+      .hero-inner { padding: 40px 16px; }
+      .hero-title { font-size: 2.4rem; }
+      .hero-sub { font-size: 1.1rem; }
+      .section { padding: 24px 20px; }
+      main { padding: 0 16px; }
+      .cards { gap: 16px; }
+      .card-mini { flex: 1 1 100%; }
+      .features { flex-direction: column; }
+      .lang { margin-left: auto; }
+      .contact-info { flex-direction: column; }
+      .services-grid {
+        grid-template-columns: 1fr;
+      }
+      .contact-details {
+        flex-direction: column;
+        gap: 15px;
+      }
+    }
+  </style>
 </head>
 <body>
-    <!-- 科技感背景 -->
-    <div class="tech-bg">
-        <div class="grid-lines"></div>
-        <div class="floating-elements">
-            <div class="floating-element"></div>
-            <div class="floating-element"></div>
-            <div class="floating-element"></div>
-        </div>
+
+  <!-- ========== 顶部 Header ========== -->
+  <header>
+    <div class="brand">
+      <div class="logo">SAG</div>
+      <div style="font-weight:700;">
+        <div id="brand-name">空天地一体化实验室</div>
+        <div id="brand-subtitle" style="font-size:14px;color:var(--muted);">Integrated Laboratory for Space, Air, and Ground Systems</div>
+      </div>
     </div>
 
-    <!-- 头部 -->
-    <header>
-        <div class="container">
-            <div class="header-content">
-                <div class="logo">
-                    <i class="fas fa-server logo-icon"></i>
-                    <div>
-                        <div class="logo-text">新疆国际融合算力中心</div>
-                        <div class="logo-subtitle">Xinjiang International Integrated Computing Power Center</div>
-                    </div>
-                </div>
-                
-                <nav>
-                    <ul>
-                        <li><a href="#home" class="active">首页</a></li>
-                        <li><a href="#about">中心简介</a></li>
-                        <li><a href="#features">核心优势</a></li>
-                        <li><a href="#stats">数据中心</a></li>
-                        <li><a href="#contact">联系我们</a></li>
-                    </ul>
-                </nav>
-                
-                <div class="language-switch">
-                    <button class="lang-btn active" id="lang-zh">中文</button>
-                    <button class="lang-btn" id="lang-en">English</button>
-                </div>
-            </div>
-        </div>
-    </header>
+    <nav aria-label="Main navigation">
+      <a class="nav-link" href="#intro" data-lang-zh="实验室简介" data-lang-en="Laboratory Overview">实验室简介</a>
+      <a class="nav-link" href="#planning" data-lang-zh="规划与目标" data-lang-en="Planning & Goals">规划与目标</a>
+      <a class="nav-link" href="#projects" data-lang-zh="关联项目" data-lang-en="Associated Projects">关联项目</a>
+      <a class="nav-link" href="#services" data-lang-zh="技术与产品服务" data-lang-en="Technical & Product Services">技术与产品服务</a>
+      <a class="nav-link" href="#vision" data-lang-zh="未来展望" data-lang-en="Future Vision">未来展望</a>
+      <a class="nav-link" href="#contact" data-lang-zh="联系我们" data-lang-en="Contact">联系我们</a>
+    </nav>
 
-    <!-- 主内容区域 -->
+    <!-- 语言切换按钮 -->
+    <div class="lang">
+      <button id="btn-zh" class="active" aria-pressed="true">中文</button>
+      <button id="btn-en" aria-pressed="false">English</button>
+    </div>
+  </header>
+
+  <!-- ========== 页面切换按钮 ========== -->
+  <div class="page-switcher">
+    <button class="page-btn active" data-page="lab-page" data-lang-zh="空天地一体化实验室" data-lang-en="Space-Air-Ground Lab">空天地一体化实验室</button>
+    <button class="page-btn" data-page="compute-page" data-lang-zh="新疆国际融合算力中心" data-lang-en="Xinjiang Computing Center">新疆国际融合算力中心</button>
+  </div>
+
+  <!-- ========== 实验室页面内容 ========== -->
+  <div id="lab-page" class="page-content active">
+    <!-- Hero 区 -->
+    <section class="hero" role="banner" aria-label="Hero">
+      <div class="hero-inner">
+        <div class="hero-left">
+          <div class="hero-title" data-lang-zh="空天地一体化实验室" data-lang-en="Integrated Laboratory for Space, Air, and Ground Systems">空天地一体化实验室</div>
+
+          <div class="hero-sub" data-lang-zh="构建'空中—天基—地面'一体化信息协同体系，以算力赋能中亚数字化新格局" data-lang-en="Building an integrated Space–Air–Ground information system empowered by green computing to drive Central Asia's digital future.">构建"空中—天基—地面"一体化信息协同体系，以算力赋能中亚数字化新格局</div>
+
+          <div class="hero-cta">
+            <a class="btn btn-primary" href="#projects" data-lang-zh="查看关联项目" data-lang-en="View Associated Projects">查看关联项目</a>
+            <button class="btn btn-ghost" onclick="window.scrollTo({top:document.getElementById('intro').offsetTop-80, behavior:'smooth'})" data-lang-zh="了解更多" data-lang-en="Learn More">了解更多</button>
+          </div>
+        </div>
+
+        <div class="hero-right">
+          <div class="card">
+            <h4 data-lang-zh="联合建设" data-lang-en="Jointly Founded">联合建设</h4>
+            <p data-lang-zh="由中科院、新疆大学、清华大学、北京大学、浙江大学等单位共建，聚焦空—天—地一体化技术与应用。" data-lang-en="Co-founded by CAS, Xinjiang University, Tsinghua University, Peking University, and Zhejiang University, focusing on integrated space–air–ground technologies and applications.">由中科院、新疆大学、清华大学、北京大学、浙江大学等单位共建，聚焦空—天—地一体化技术与应用。</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 主要内容 -->
     <main>
-        <!-- 英雄区域 -->
-        <section class="hero" id="home">
-            <div class="container">
-                <h1 id="hero-title">新疆国际融合算力中心</h1>
-                <p id="hero-desc">西部地区最具代表性的高性能算力枢纽，为科研院所、产业企业以及"一带一路"沿线国家提供高效、可持续的算力支撑。</p>
-                <a href="#about" class="btn">探索更多</a>
-            </div>
-        </section>
+      <!-- 实验室简介 -->
+      <section id="intro" class="section">
+        <h3 data-lang-zh="实验室简介" data-lang-en="Laboratory Overview">实验室简介</h3>
+        <p data-lang-zh="空天地一体化实验室由中国科学院、新疆大学、清华大学、北京大学、浙江大学等高校与研究机构共建，拥有60余名专业技术人员（研发人员占比高），由院士顾问组提供技术指导。实验室旨在通过空天遥感、低空感知与地面智能监测的协同，构建面向中亚及中国西部的时空智能数据平台，推动农业、能源、生态与应急管理的数字化升级。" data-lang-en="The Integrated Laboratory for Space, Air, and Ground Systems is jointly established by the Chinese Academy of Sciences, Xinjiang University, Tsinghua University, Peking University, Zhejiang University, and other research institutions. With over 60 professional technical staff (high proportion of R&D personnel) and guided by an academician advisory group, the laboratory aims to build a spatiotemporal intelligent data platform for Central Asia and Western China through the integration of space remote sensing, low-altitude sensing, and ground intelligent monitoring, promoting digital transformation in agriculture, energy, ecology, and emergency management.">空天地一体化实验室由中国科学院、新疆大学、清华大学、北京大学、浙江大学等高校与研究机构共建，拥有60余名专业技术人员（研发人员占比高），由院士顾问组提供技术指导。实验室旨在通过空天遥感、低空感知与地面智能监测的协同，构建面向中亚及中国西部的时空智能数据平台，推动农业、能源、生态与应急管理的数字化升级。</p>
+      </section>
 
-        <!-- 关于我们 -->
-        <section class="section" id="about">
-            <div class="container">
-                <h2 class="section-title" id="about-title">中心简介</h2>
-                <p class="section-subtitle" id="about-subtitle">新疆首个国际级融合算力基础设施，由多所高校共建，院士领衔</p>
-                
-                <div class="content-card fade-in">
-                    <h3 id="about-content-title">关于我们</h3>
-                    <p id="about-content">
-                        新疆国际融合算力中心是新疆首个国际级融合算力基础设施，由新疆大学、清华大学、北京大学等多所高校共建，中国工程院院士吾守尔·斯拉木等六位院士领衔，于2025年5月16日在昌吉正式投入运行。中心总算力规模达到10000P，建成后成为西部地区最具代表性的高性能算力枢纽，为科研院所、产业企业以及"一带一路"沿线国家提供高效、可持续的算力支撑。
-                    </p>
-                    <p id="about-content2">
-                        中心依托新疆丰富的风能与光伏资源，全面采用清洁电力供能，配合液冷散热技术，实现PUE值低于1.2，以绿色、低碳、节能为设计核心。在算力调度层面，通过人工智能与算法优化技术，实现任务分配与能耗的动态平衡，显著提升算力资源利用效率，构建智能化、绿色化的算力运行体系。
-                    </p>
-                </div>
-                
-                <div class="content-card fade-in">
-                    <h3 id="development-title">发展模式</h3>
-                    <p id="development-content">
-                        在发展模式上，中心以"科研+算力+应用"为核心架构，形成科学研究、成果转化与产业赋能的闭环生态。科研方面，联合多所高校共建实验平台，为人工智能、气候模拟、能源勘探、卫星遥感等领域提供高性能计算支持；产业方面，为农业、制造业、医疗、物流等行业提供定制化算力服务，加速区域数字化转型进程。
-                    </p>
-                    <p id="development-content2">
-                        作为国家"东数西算"工程中线通道的重要节点，中心在西部形成算力聚合与外溢的战略优势，成为链接东中西部算力资源的重要枢纽。依托"空天地一体化"信息体系，中心进一步向中亚地区延伸算力、算法与数据服务，推动"一带一路"沿线国家在能源、交通、农业、气象等领域的数字合作，共建开放共享的"数字丝绸之路"。
-                    </p>
-                </div>
-            </div>
-        </section>
-
-        <!-- 核心优势 -->
-        <section class="section" id="features">
-            <div class="container">
-                <h2 class="section-title" id="features-title">核心优势</h2>
-                <p class="section-subtitle" id="features-subtitle">绿色、高效、智能的算力基础设施</p>
-                
-                <div class="features">
-                    <div class="feature fade-in">
-                        <i class="fas fa-leaf feature-icon"></i>
-                        <h3 id="feature1-title">绿色能源</h3>
-                        <p id="feature1-desc">依托新疆丰富的风能与光伏资源，全面采用清洁电力供能，实现PUE值低于1.2。</p>
-                    </div>
-                    
-                    <div class="feature fade-in">
-                        <i class="fas fa-bolt feature-icon"></i>
-                        <h3 id="feature2-title">高效算力</h3>
-                        <p id="feature2-desc">总算力规模达到10000P，通过AI调度优化，实现任务分配与能耗的动态平衡。</p>
-                    </div>
-                    
-                    <div class="feature fade-in">
-                        <i class="fas fa-network-wired feature-icon"></i>
-                        <h3 id="feature3-title">战略节点</h3>
-                        <p id="feature3-desc">作为国家"东数西算"工程中线通道的重要节点，链接东中西部算力资源。</p>
-                    </div>
-                    
-                    <div class="feature fade-in">
-                        <i class="fas fa-globe-asia feature-icon"></i>
-                        <h3 id="feature4-title">国际合作</h3>
-                        <p id="feature4-desc">向中亚地区延伸算力服务，推动"一带一路"沿线国家数字合作，共建"数字丝绸之路"。</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- 数据中心 -->
-        <section class="section" id="stats">
-            <div class="container">
-                <h2 class="section-title" id="stats-title">数据中心</h2>
-                <p class="section-subtitle" id="stats-subtitle">先进的数据基础设施与卓越的性能指标</p>
-                
-                <div class="stats">
-                    <div class="stat-item fade-in">
-                        <div class="stat-number">10000P</div>
-                        <div class="stat-label" id="stat1-label">总算力规模</div>
-                    </div>
-                    
-                    <div class="stat-item fade-in">
-                        <div class="stat-number">&lt; 1.2</div>
-                        <div class="stat-label" id="stat2-label">PUE值</div>
-                    </div>
-                    
-                    <div class="stat-item fade-in">
-                        <div class="stat-number">100%</div>
-                        <div class="stat-label" id="stat3-label">清洁能源</div>
-                    </div>
-                    
-                    <div class="stat-item fade-in">
-                        <div class="stat-number">6+</div>
-                        <div class="stat-label" id="stat4-label">院士领衔</div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- 联系我们 -->
-        <section class="section" id="contact">
-            <div class="container">
-                <h2 class="section-title" id="contact-title">联系我们</h2>
-                <p class="section-subtitle" id="contact-subtitle">欢迎与我们取得联系，了解更多关于算力中心的信息</p>
-                
-                <div class="contact-info">
-                    <div class="contact-item">
-                        <i class="fas fa-map-marker-alt contact-icon"></i>
-                        <div>
-                            <h4 id="address-title">地址</h4>
-                            <p id="address">新疆维吾尔自治区昌吉回族自治州昌吉市昌吉移动IDC机房</p>
-                        </div>
-                    </div>
-                    
-                    <div class="contact-item">
-                        <i class="fas fa-phone contact-icon"></i>
-                        <div>
-                            <h4 id="phone-title">电话</h4>
-                            <p id="phone">0994-2292122</p>
-                        </div>
-                    </div>
-                    
-                    <div class="contact-item">
-                        <i class="fas fa-fax contact-icon"></i>
-                        <div>
-                            <h4 id="fax-title">传真</h4>
-                            <p id="fax">0994-2292122</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-    </main>
-
-    <!-- 页脚 -->
-    <footer>
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-section">
-                    <h3 id="footer-title">新疆国际融合算力中心</h3>
-                    <p id="footer-desc">西部地区最具代表性的高性能算力枢纽，为科研院所、产业企业以及"一带一路"沿线国家提供高效、可持续的算力支撑。</p>
-                </div>
-                
-                <div class="footer-section">
-                    <h3 id="quick-links-title">快速链接</h3>
-                    <ul>
-                        <li><a href="#home">首页</a></li>
-                        <li><a href="#about">中心简介</a></li>
-                        <li><a href="#features">核心优势</a></li>
-                        <li><a href="#stats">数据中心</a></li>
-                        <li><a href="#contact">联系我们</a></li>
-                    </ul>
-                </div>
-                
-                <div class="footer-section">
-                    <h3 id="contact-info-title">联系信息</h3>
-                    <p><i class="fas fa-map-marker-alt"></i> <span id="footer-address">新疆维吾尔自治区昌吉回族自治州昌吉市</span></p>
-                    <p><i class="fas fa-phone"></i> 0994-2292122</p>
-                    <p><i class="fas fa-fax"></i> 0994-2292122</p>
-                </div>
-            </div>
-            
-            <div class="footer-bottom">
-                <p id="copyright">&copy; 2025 新疆国际融合算力中心. 保留所有权利.</p>
-            </div>
+      <!-- 特色亮点 -->
+      <section class="section">
+        <h3 data-lang-zh="特色亮点" data-lang-en="Key Features">特色亮点</h3>
+        <div class="features">
+          <div class="feature">
+            <div class="feature-icon">🛰🛰🛰</div>
+            <h4 data-lang-zh="空天遥感" data-lang-en="Space Remote Sensing">空天遥感</h4>
+            <p data-lang-zh="高分辨率卫星遥感与北斗高精度定位技术" data-lang-en="High-resolution satellite remote sensing and Beidou positioning">高分辨率卫星遥感与北斗高精度定位技术</p>
+          </div>
+          <div class="feature">
+            <div class="feature-icon">🚁🚁🚁</div>
+            <h4 data-lang-zh="低空感知" data-lang-en="Low-altitude Sensing">低空感知</h4>
+            <p data-lang-zh="无人机智能调度与低空安全预警平台" data-lang-en="Intelligent UAV dispatch and low-altitude safety warning">无人机智能调度与低空安全预警平台</p>
+          </div>
+          <div class="feature">
+            <div class="feature-icon">🌐🌐🌐</div>
+            <h4 data-lang-zh="国际协作" data-lang-en="International Collaboration">国际协作</h4>
+            <p data-lang-zh="与中亚国家共建联合实验室，推动区域合作" data-lang-en="Joint labs with Central Asian countries for regional cooperation">与中亚国家共建联合实验室，推动区域合作</p>
+          </div>
         </div>
-    </footer>
+      </section>
 
-    <script>
-        // 语言切换功能
-        document.getElementById('lang-zh').addEventListener('click', function() {
-            setLanguage('zh');
-            this.classList.add('active');
-            document.getElementById('lang-en').classList.remove('active');
+      <!-- 规划与目标 -->
+      <section id="planning" class="section">
+        <h3 data-lang-zh="规划与目标" data-lang-en="Planning & Goals">规划与目标</h3>
+        <p data-lang-zh="实验室围绕航空航天、低空地面协同、低空经济与中亚国际合作四大主线开展规划与实施，旨在构建覆盖'观测—感知—决策'的时空智能体系。" data-lang-en="The laboratory focuses on four main areas: aerospace, air-ground integration, low-altitude economy, and Central Asia international cooperation, aiming to build a spatiotemporal intelligent system covering 'observation-perception-decision' processes.">实验室围绕航空航天、低空地面协同、低空经济与中亚国际合作四大主线开展规划与实施，旨在构建覆盖"观测—感知—决策"的时空智能体系。</p>
+
+        <div class="cards">
+          <!-- 航空航天 -->
+          <div class="card-mini">
+            <h4 data-lang-zh="A：航空航天" data-lang-en="A：Aerospace">A：航空航天</h4>
+            <p data-lang-zh="依托高分辨率卫星遥感与北斗高精度定位，开展能源走廊监测、地表形变实时预警与跨境物流轨迹追踪等应用。" data-lang-en="Leveraging high-resolution satellite remote sensing and Beidou high-precision positioning for energy corridor monitoring, surface deformation real-time warning, and cross-border logistics tracking applications.">依托高分辨率卫星遥感与北斗高精度定位，开展能源走廊监测、地表形变实时预警与跨境物流轨迹追踪等应用。</p>
+          </div>
+
+          <!-- 低空地面 -->
+          <div class="card-mini">
+            <h4 data-lang-zh="B：低空地面" data-lang-en="B：Air–Ground Integration">B：低空地面</h4>
+            <p data-lang-zh="建设低空安全预警与无人机智能调度平台，形成无人机—地面感知—算力处理的协同体系，服务应急与生产场景。" data-lang-en="Building a low-altitude safety warning and UAV intelligent dispatch platform to create a collaborative system of UAV-ground perception-computing processing for emergency and production scenarios.">建设低空安全预警与无人机智能调度平台，形成无人机—地面感知—算力处理的协同体系，服务应急与生产场景。</p>
+          </div>
+
+          <!-- 低空经济 -->
+          <div class="card-mini">
+            <h4 data-lang-zh="C：低空经济" data-lang-en="C：Low-Altitude Economy">C：低空经济</h4>
+            <p data-lang-zh="培育无人机物流、精准农业与低空服务产业，建设示范区并推动新业态发展与人才培养。" data-lang-en="Cultivating UAV logistics, precision agriculture, and low-altitude service industries, establishing demonstration zones and promoting new business development and talent cultivation.">培育无人机物流、精准农业与低空服务产业，建设示范区并推动新业态发展与人才培养。</p>
+          </div>
+
+          <!-- 中亚合作 -->
+          <div class="card-mini">
+            <h4 data-lang-zh="D：中亚合作" data-lang-en="D：Central Asia Cooperation">D：中亚合作</h4>
+            <p data-lang-zh="与哈萨克斯坦等国家共建中亚国际联合实验室，推进空天数据共享、联合科研与人才培养，构建'空天信息走廊'。" data-lang-en="Jointly establishing Central Asia international joint laboratories with countries like Kazakhstan, promoting space data sharing, joint research, and talent cultivation to build a 'space information corridor'.">与哈萨克斯坦等国家共建中亚国际联合实验室，推进空天数据共享、联合科研与人才培养，构建"空天信息走廊"。</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- 关联项目 -->
+      <section id="projects" class="section">
+        <h3 data-lang-zh="关联项目" data-lang-en="Associated Projects">关联项目</h3>
+
+        <div class="proj-list">
+          <div class="proj-item">
+            <h4 data-lang-zh="新疆国际融合算力中心（算力支撑）" data-lang-en="Xinjiang International Integrated Computing Power Center (Computing Backbone)">新疆国际融合算力中心（算力支撑）</h4>
+            <p data-lang-zh="新疆国际融合算力中心位于昌吉市，是实验室的重要算力与数据支撑平台。项目一期已投运峰值算力2000P，二期规划新增8000P，建成后总算力规模为10000P。中心采用先进液冷与智能调度系统，一期数据中心PUE值低于2，为卫星遥感影像解译、多模态AI训练与跨境数据服务提供稳定、高效、低碳的计算基础。" data-lang-en="Located in Changji City, the Xinjiang International Integrated Computing Power Center serves as a crucial computing and data support platform for the laboratory. Phase I has deployed 2,000P peak computing power, with Phase II planning an additional 8,000P, totaling 10,000P upon completion. Utilizing advanced liquid cooling and intelligent scheduling systems, the Phase I data center achieves a PUE as low as 1.15, providing stable, efficient, and low-carbon computing infrastructure for satellite imagery interpretation, multimodal AI training, and cross-border data services.">新疆国际融合算力中心位于昌吉市，是实验室的重要算力与数据支撑平台。项目一期已投运峰值算力2000P，二期规划新增8000P，建成后总算力规模为10000P。中心采用先进液冷与智能调度系统，一期数据中心PUE值低于2，为卫星遥感影像解译、多模态AI训练与跨境数据服务提供稳定、高效、低碳的计算基础。</p>
+
+            <p style="margin-top:12px;">
+              <a href="#" class="btn btn-ghost" onclick="switchPage('compute-page')" data-lang-zh="查看算力中心详情 →" data-lang-en="View Computing Center Details →">查看算力中心详情 →</a>
+            </p>
+          </div>
+
+          <div class="proj-item">
+            <h4 data-lang-zh="中亚时空智能与可持续发展国际联合实验室" data-lang-en="China–Central Asia Joint Laboratory for Spatiotemporal Intelligence and Sustainable Development">中亚时空智能与可持续发展国际联合实验室</h4>
+            <p data-lang-zh="基于'一带一路'倡议，推动区域科研合作、数据共享与人才培养，已列入区域合作重点项目名单。" data-lang-en="Based on the Belt and Road Initiative, promoting regional scientific cooperation, data sharing, and talent cultivation, already included in the key regional cooperation project list.">基于"一带一路"倡议，推动区域科研合作、数据共享与人才培养，已列入区域合作重点项目名单。</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ========== 技术与产品服务 ========== -->
+      <section id="services" class="section">
+        <h3 data-lang-zh="技术与产品服务" data-lang-en="Technical & Product Services">技术与产品服务</h3>
+        
+        <div class="services-intro">
+          <p data-lang-zh="空天地一体化实验室及新疆国际融合算力中心面向科研、企事业单位及合作伙伴，开放核心资源与设备服务，提供以下技术咨询与采购支持：" 
+             data-lang-en="The Space–Air–Ground Integrated Laboratory and the Xinjiang International Integrated Computing Power Center provide open access to key resources and equipment for research institutions, enterprises, and international partners, offering the following consultation and procurement services:">
+          </p>
+        </div>
+        
+        <div class="services-grid">
+          <div class="service-card">
+            <div class="service-icon">💻</div>
+            <h4 data-lang-zh="算力资源租赁与AI大模型训练环境部署" data-lang-en="Computing Power Leasing & AI Training">算力资源租赁与AI大模型训练环境部署</h4>
+            <p data-lang-zh="提供高性能计算资源租赁服务，支持大规模AI模型训练与部署，包括GPU集群、分布式计算环境等。" 
+               data-lang-en="High-performance computing resource leasing services supporting large-scale AI model training and deployment, including GPU clusters and distributed computing environments.">
+            </p>
+          </div>
+          
+          <div class="service-card">
+            <div class="service-icon">🛰️</div>
+            <h4 data-lang-zh="卫星遥感数据解译与地理信息数据服务" data-lang-en="Remote Sensing & Geospatial Services">卫星遥感数据解译与地理信息数据服务</h4>
+            <p data-lang-zh="提供高分辨率卫星遥感数据获取、处理与解译服务，以及定制化地理信息数据分析解决方案。" 
+               data-lang-en="High-resolution satellite remote sensing data acquisition, processing, interpretation, and customized geospatial data analysis solutions.">
+            </p>
+          </div>
+          
+          <div class="service-card">
+            <div class="service-icon">🚁</div>
+            <h4 data-lang-zh="无人机集群与低空监测系统设备采购与定制" data-lang-en="UAV Systems & Low-altitude Monitoring">无人机集群与低空监测系统设备采购与定制</h4>
+            <p data-lang-zh="提供无人机集群系统采购、定制开发与技术支持，包括低空监测、巡检、测绘等专业解决方案。" 
+               data-lang-en="UAV cluster system procurement, custom development, and technical support, including specialized solutions for low-altitude monitoring, inspection, and mapping.">
+            </p>
+          </div>
+          
+          <div class="service-card">
+            <div class="service-icon">🤖</div>
+            <h4 data-lang-zh="智能机器人平台与应用解决方案" data-lang-en="Intelligent Robotics Solutions">智能机器人平台与应用解决方案</h4>
+            <p data-lang-zh="提供智能机器人平台开发与应用解决方案，涵盖巡检机器人、物流机器人、特种作业机器人等。" 
+               data-lang-en="Intelligent robotics platform development and application solutions, including inspection robots, logistics robots, and specialized operation robots.">
+            </p>
+          </div>
+          
+          <div class="service-card">
+            <div class="service-icon">🌐</div>
+            <h4 data-lang-zh="技术转移与项目联合研发" data-lang-en="Technology Transfer & Joint R&D">技术转移与项目联合研发</h4>
+            <p data-lang-zh="提供技术转移服务，支持产学研合作项目，共同开展前沿技术研发与成果转化。" 
+               data-lang-en="Technology transfer services and support for industry-academia-research collaboration projects, jointly developing cutting-edge technologies and transferring achievements.">
+            </p>
+          </div>
+          
+          <div class="service-card">
+            <div class="service-icon">🤝</div>
+            <h4 data-lang-zh="国际合作支持与服务" data-lang-en="International Collaboration Support">国际合作支持与服务</h4>
+            <p data-lang-zh="提供中亚及一带一路沿线国家的技术合作支持，包括联合实验室建设、人才交流与技术培训等服务。" 
+               data-lang-en="Technical collaboration support for Central Asia and Belt and Road countries, including joint laboratory establishment, talent exchange, and technical training.">
+            </p>
+          </div>
+        </div>
+        
+        <div class="service-contact">
+          <h4 data-lang-zh="获取更多产品资料、定制方案或报价" data-lang-en="For Product Info, Custom Plans or Quotations">获取更多产品资料、定制方案或报价</h4>
+          <p data-lang-zh="请联系实验室项目合作部门" data-lang-en="Please contact our Project Cooperation Department">请联系实验室项目合作部门</p>
+          
+          <div class="contact-details">
+            <div class="contact-detail">
+              <span class="contact-icon">📧</span>
+              <span data-lang-zh="邮箱：3814880298@qq.com" data-lang-en="Email：3814880298@qq.com">邮箱：3814880298@qq.com</span>
+            </div>
+            <div class="contact-detail">
+              <span class="contact-icon">📞</span>
+              <span data-lang-zh="电话：0994-2292122" data-lang-en="Phone：0994-2292122">电话：0994-2292122</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 未来愿景 -->
+      <section id="vision" class="section">
+        <h3 data-lang-zh="未来展望" data-lang-en="Future Vision">未来展望</h3>
+        <p data-lang-zh="实验室将持续推动空天地数据与绿色算力的深度融合，完善跨境数据共享机制，推动AI大模型在遥感与城市治理中的落地应用，致力于打造服务中亚与内地的时空智能科研高地，助力区域可持续发展与国际科技合作。" data-lang-en="The laboratory will continue to advance the deep integration of space-air-ground data with green computing, improve cross-border data sharing mechanisms, promote the application of large AI models in remote sensing and urban governance, and strive to build a spatiotemporal intelligence research hub serving Central Asia and mainland China, contributing to regional sustainable development and international scientific cooperation.">实验室将持续推动空天地数据与绿色算力的深度融合，完善跨境数据共享机制，推动AI大模型在遥感与城市治理中的落地应用，致力于打造服务中亚与内地的时空智能科研高地，助力区域可持续发展与国际科技合作。</p>
+      </section>
+
+      <!-- 联系我们 -->
+      <section id="contact" class="section">
+        <h3 data-lang-zh="联系我们" data-lang-en="Contact">联系我们</h3>
+        <p data-lang-zh="欢迎与我们取得联系，了解更多关于空天地一体化实验室的信息" data-lang-en="Welcome to contact us to learn more about the Integrated Laboratory for Space, Air, and Ground Systems">欢迎与我们取得联系，了解更多关于空天地一体化实验室的信息</p>
+        
+        <div class="contact-info">
+          <div class="contact-item">
+            <h4 data-lang-zh="地址" data-lang-en="Address">地址</h4>
+            <p data-lang-zh="新疆维吾尔自治区昌吉回族自治州财政局13楼空天地一体化实验室" data-lang-en="13F, Finance Bureau, Changji Hui Autonomous Prefecture, Xinjiang Uygur Autonomous Region, Integrated Laboratory for Space, Air, and Ground Systems">新疆维吾尔自治区昌吉回族自治州财政局13楼空天地一体化实验室</p>
+          </div>
+          
+          <div class="contact-item">
+            <h4 data-lang-zh="电话" data-lang-en="Phone">电话</h4>
+            <p data-lang-zh="0994-2292122" data-lang-en="0994-2292122">0994-2292122</p>
+          </div>
+          
+          <div class="contact-item">
+            <h4 data-lang-zh="传真" data-lang-en="Fax">传真</h4>
+            <p data-lang-zh="0994-2292122" data-lang-en="0994-2292122">0994-2292122</p>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <!-- ========== 算力中心页面内容 ========== -->
+  <div id="compute-page" class="page-content">
+    <!-- Hero 区 -->
+    <section class="hero">
+      <div class="hero-inner">
+        <div class="hero-left">
+          <div class="hero-title" data-lang-zh="新疆国际融合算力中心" data-lang-en="Xinjiang International Integrated Computing Power Center">新疆国际融合算力中心</div>
+
+          <div class="hero-sub" data-lang-zh="国家'东数西算'工程重要节点，为科研、产业及中亚区域提供'数据 + 算力 + 应用'的综合支撑" data-lang-en="A key node of China's 'East–Data–West–Computing' initiative, providing comprehensive 'Data + Computing Power + Applications' support to research, industry, and the Central Asia region.">国家"东数西算"工程重要节点，为科研、产业及中亚区域提供"数据 + 算力 + 应用"的综合支撑</div>
+
+          <div class="hero-cta">
+            <button class="btn btn-ghost" onclick="switchPage('lab-page')" data-lang-zh="← 返回实验室主页" data-lang-en="← Back to Laboratory">← 返回实验室主页</button>
+          </div>
+        </div>
+
+        <div class="hero-right">
+          <div class="card">
+            <h4 data-lang-zh="技术亮点" data-lang-en="Technical Highlights">技术亮点</h4>
+            <p data-lang-zh="采用先进液冷技术，PUE值低于2，融合超算与智能算力架构，为大规模AI训练、卫星遥感解译提供稳定高效的计算平台。" data-lang-en="Utilizing advanced liquid cooling technology with PUE as low as 1.15, integrating supercomputing and intelligent computing architectures to provide a stable and efficient computing platform for large-scale AI training and satellite remote sensing interpretation.">采用先进液冷技术，PUE值低于2，融合超算与智能算力架构，为大规模AI训练、卫星遥感解译提供稳定高效的计算平台。</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 主要内容 -->
+    <main>
+      <!-- 项目概述 -->
+      <section class="section" id="compute-overview">
+        <h3 data-lang-zh="项目概述" data-lang-en="Project Overview">项目概述</h3>
+        <p data-lang-zh="新疆国际融合算力中心位于昌吉信息产业园，是国家'东数西算'工程的重要节点。项目由中国科学院、新疆大学、清华大学、北京大学等单位联合建设，旨在为科研、产业及中亚区域提供'数据 + 算力 + 应用'的综合支撑。" data-lang-en="Located in Changji Information Industry Park, the Xinjiang International Integrated Computing Power Center is a key node in China's 'East–Data–West–Computing' project. Jointly established by the Chinese Academy of Sciences, Xinjiang University, Tsinghua University, Peking University, and other institutions, it aims to provide comprehensive 'Data + Computing Power + Applications' support for research, industry, and the Central Asia region.">新疆国际融合算力中心位于昌吉信息产业园，是国家"东数西算"工程的重要节点。项目由中国科学院、新疆大学、清华大学、北京大学等单位联合建设，旨在为科研、产业及中亚区域提供"数据 + 算力 + 应用"的综合支撑。</p>
+      </section>
+
+      <!-- 建设规模与技术 -->
+      <section class="section" id="compute-scale">
+        <h3 data-lang-zh="建设规模与技术" data-lang-en="Scale & Technology">建设规模与技术</h3>
+        <div class="cards">
+          <div class="card-mini">
+            <h4 data-lang-zh="一期算力峰值 2000P" data-lang-en="Phase I Peak 2,000P">一期算力峰值 2000P</h4>
+          </div>
+          <div class="card-mini">
+            <h4 data-lang-zh="二期在建 8000P（规划）" data-lang-en="Phase II Planned 8,000P">二期在建 8000P（规划）</h4>
+          </div>
+          <div class="card-mini">
+            <h4 data-lang-zh="PUE ＜ 2（一期）" data-lang-en="PUE ＜ 2 (Phase I)">PUE ＜ 2（一期）</h4>
+          </div>
+        </div>
+
+        <p data-lang-zh="中心采用先进液冷技术与智能算力调度系统，融合超算与智能算力架构，为大规模AI训练、卫星遥感解译和大数据处理提供稳定高效的计算平台，致力于低碳与可持续运行。" data-lang-en="The center employs advanced liquid cooling technology and intelligent computing power scheduling systems, integrating supercomputing and intelligent computing architectures to provide a stable and efficient computing platform for large-scale AI training, satellite remote sensing interpretation, and big data processing, committed to low-carbon and sustainable operation." style="margin-top:20px;">中心采用先进液冷技术与智能算力调度系统，融合超算与智能算力架构，为大规模AI训练、卫星遥感解译和大数据处理提供稳定高效的计算平台，致力于低碳与可持续运行。</p>
+      </section>
+
+      <!-- 应用与服务 -->
+      <section class="section" id="compute-applications">
+        <h3 data-lang-zh="应用与服务" data-lang-en="Applications & Services">应用与服务</h3>
+        <p data-lang-zh="中心以'数据 + 算力 + 应用'为运行模式，支撑卫星遥感数字平台、低空安全预警、精准农业推算模型、工业模拟与公共安全等多类应用。通过与空天地一体化实验室深度协同，推动AI大模型在遥感解译、应急响应与跨境物流等场景的落地。" data-lang-en="Operating on a 'Data + Computing Power + Applications' model, the center supports various applications including satellite remote sensing digital platforms, low-altitude safety warnings, precision agriculture calculation models, industrial simulation, and public safety. Through deep collaboration with the Integrated Laboratory for Space, Air, and Ground Systems, it promotes the implementation of large AI models in scenarios such as remote sensing interpretation, emergency response, and cross-border logistics.">中心以"数据 + 算力 + 应用"为运行模式，支撑卫星遥感数字平台、低空安全预警、精准农业推算模型、工业模拟与公共安全等多类应用。通过与空天地一体化实验室深度协同，推动AI大模型在遥感解译、应急响应与跨境物流等场景的落地。</p>
+      </section>
+
+      <!-- 规划与目标 -->
+      <section class="section" id="compute-strategy">
+        <h3 data-lang-zh="规划与目标" data-lang-en="Planning & Goals">规划与目标</h3>
+        <p data-lang-zh="中心致力于构建绿色低碳的区域算力枢纽，提升科研与产业算力可及性，推动中亚区域的数字协作。通过产学研融合与国际合作，中心希望形成'技术研发—成果转化—产业应用'的闭环，培育面向区域需求的AI与遥感解决方案。" data-lang-en="The center is committed to building a green, low-carbon regional computing hub, improving the accessibility of computing power for research and industry, and promoting digital collaboration in Central Asia. Through industry-academia-research integration and international cooperation, the center aims to form a closed loop of 'technology R&D - achievement transformation - industrial application' and cultivate AI and remote sensing solutions tailored to regional needs.">中心致力于构建绿色低碳的区域算力枢纽，提升科研与产业算力可及性，推动中亚区域的数字协作。通过产学研融合与国际合作，中心希望形成"技术研发—成果转化—产业应用"的闭环，培育面向区域需求的AI与遥感解决方案。</p>
+
+        <div class="hero-cta" style="margin-top:20px;">
+          <button class="btn btn-primary" onclick="switchPage('lab-page')" data-lang-zh="返回实验室主页" data-lang-en="Back to Laboratory">返回实验室主页</button>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <footer>
+    © 2025 空天地一体化实验室 / Integrated Laboratory for Space, Air, and Ground Systems
+  </footer>
+
+  <!-- ========= 脚本：页面切换和语言切换 ========= -->
+  <script>
+    // 页面切换功能
+    function switchPage(pageId) {
+      // 隐藏所有页面
+      document.querySelectorAll('.page-content').forEach(page => {
+        page.classList.remove('active');
+      });
+      
+      // 显示目标页面
+      document.getElementById(pageId).classList.add('active');
+      
+      // 更新按钮状态
+      document.querySelectorAll('.page-btn').forEach(btn => {
+        btn.classList.remove('active');
+        if (btn.getAttribute('data-page') === pageId) {
+          btn.classList.add('active');
+        }
+      });
+      
+      // 滚动到顶部
+      window.scrollTo({top: 0, behavior: 'smooth'});
+    }
+
+    // 页面切换按钮事件
+    document.querySelectorAll('.page-btn').forEach(btn => {
+      btn.addEventListener('click', function() {
+        switchPage(this.getAttribute('data-page'));
+      });
+    });
+
+    // 语言切换功能
+    (function(){
+      const btnZh = document.getElementById('btn-zh');
+      const btnEn = document.getElementById('btn-en');
+      let currentLang = 'zh';
+
+      // 切换语言函数
+      function switchLanguage(lang) {
+        currentLang = lang;
+        
+        // 切换所有带有 data-lang-zh 和 data-lang-en 属性的元素
+        document.querySelectorAll('[data-lang-zh]').forEach(el => {
+          const zhText = el.getAttribute('data-lang-zh');
+          const enText = el.getAttribute('data-lang-en');
+          
+          if (lang === 'zh') {
+            el.textContent = zhText;
+          } else {
+            el.textContent = enText;
+          }
         });
         
-        document.getElementById('lang-en').addEventListener('click', function() {
-            setLanguage('en');
-            this.classList.add('active');
-            document.getElementById('lang-zh').classList.remove('active');
+        // 更新页面切换按钮文本
+        document.querySelectorAll('.page-btn').forEach(btn => {
+          const zhText = btn.getAttribute('data-lang-zh');
+          const enText = btn.getAttribute('data-lang-en');
+          
+          if (lang === 'zh') {
+            btn.textContent = zhText;
+          } else {
+            btn.textContent = enText;
+          }
         });
         
-        // 语言内容
-        const translations = {
-            'zh': {
-                'hero-title': '新疆国际融合算力中心',
-                'hero-desc': '西部地区最具代表性的高性能算力枢纽，为科研院所、产业企业以及"一带一路"沿线国家提供高效、可持续的算力支撑。',
-                'about-title': '中心简介',
-                'about-subtitle': '新疆首个国际级融合算力基础设施，由多所高校共建，院士领衔',
-                'about-content-title': '关于我们',
-                'about-content': '新疆国际融合算力中心是新疆首个国际级融合算力基础设施，由新疆大学、清华大学、北京大学等多所高校共建，中国工程院院士吾守尔·斯拉木等六位院士领衔，于2025年5月16日在昌吉正式投入运行。中心总算力规模达到10000P，建成后成为西部地区最具代表性的高性能算力枢纽，为科研院所、产业企业以及"一带一路"沿线国家提供高效、可持续的算力支撑。',
-                'about-content2': '中心依托新疆丰富的风能与光伏资源，全面采用清洁电力供能，配合液冷散热技术，实现PUE值低于1.2，以绿色、低碳、节能为设计核心。在算力调度层面，通过人工智能与算法优化技术，实现任务分配与能耗的动态平衡，显著提升算力资源利用效率，构建智能化、绿色化的算力运行体系。',
-                'development-title': '发展模式',
-                'development-content': '在发展模式上，中心以"科研+算力+应用"为核心架构，形成科学研究、成果转化与产业赋能的闭环生态。科研方面，联合多所高校共建实验平台，为人工智能、气候模拟、能源勘探、卫星遥感等领域提供高性能计算支持；产业方面，为农业、制造业、医疗、物流等行业提供定制化算力服务，加速区域数字化转型进程。',
-                'development-content2': '作为国家"东数西算"工程中线通道的重要节点，中心在西部形成算力聚合与外溢的战略优势，成为链接东中西部算力资源的重要枢纽。依托"空天地一体化"信息体系，中心进一步向中亚地区延伸算力、算法与数据服务，推动"一带一路"沿线国家在能源、交通、农业、气象等领域的数字合作，共建开放共享的"数字丝绸之路"。',
-                'features-title': '核心优势',
-                'features-subtitle': '绿色、高效、智能的算力基础设施',
-                'feature1-title': '绿色能源',
-                'feature1-desc': '依托新疆丰富的风能与光伏资源，全面采用清洁电力供能，实现PUE值低于1.2。',
-                'feature2-title': '高效算力',
-                'feature2-desc': '总算力规模达到10000P，通过AI调度优化，实现任务分配与能耗的动态平衡。',
-                'feature3-title': '战略节点',
-                'feature3-desc': '作为国家"东数西算"工程中线通道的重要节点，链接东中西部算力资源。',
-                'feature4-title': '国际合作',
-                'feature4-desc': '向中亚地区延伸算力服务，推动"一带一路"沿线国家数字合作，共建"数字丝绸之路"。',
-                'stats-title': '数据中心',
-                'stats-subtitle': '先进的数据基础设施与卓越的性能指标',
-                'stat1-label': '总算力规模',
-                'stat2-label': 'PUE值',
-                'stat3-label': '清洁能源',
-                'stat4-label': '院士领衔',
-                'contact-title': '联系我们',
-                'contact-subtitle': '欢迎与我们取得联系，了解更多关于算力中心的信息',
-                'address-title': '地址',
-                'address': '新疆维吾尔自治区昌吉回族自治州昌吉市昌吉移动IDC机房',
-                'phone-title': '电话',
-                'phone': '0994-2292122',
-                'fax-title': '传真',
-                'fax': '0994-2292122',
-                'footer-title': '新疆国际融合算力中心',
-                'footer-desc': '西部地区最具代表性的高性能算力枢纽，为科研院所、产业企业以及"一带一路"沿线国家提供高效、可持续的算力支撑。',
-                'quick-links-title': '快速链接',
-                'contact-info-title': '联系信息',
-                'footer-address': '新疆维吾尔自治区昌吉回族自治州昌吉市',
-                'copyright': '© 2025 新疆国际融合算力中心. 保留所有权利.'
-            },
-            'en': {
-                'hero-title': 'Xinjiang International Integrated Computing Power Center',
-                'hero-desc': 'A landmark high-performance computing hub in Western China, providing efficient and sustainable computing services to research institutions, industries, and Belt and Road countries.',
-                'about-title': 'Center Introduction',
-                'about-subtitle': 'The first international-level integrated computing infrastructure in Xinjiang',
-                'about-content-title': 'About Us',
-                'about-content': 'The Xinjiang International Integrated Computing Power Center is the first international-level integrated computing infrastructure in Xinjiang. Jointly established by Xinjiang University, Tsinghua University, and Peking University, and led by six academicians including Academician Wushour Silamu of the Chinese Academy of Engineering, the Center was officially launched in Changji on May 16, 2025.',
-                'about-content2': 'Leveraging Xinjiang\'s abundant wind and solar energy, the Center operates entirely on clean power and employs advanced liquid-cooling technology to maintain a PUE below 1.2 and designed with green, low-carbon, and energy-saving principles.',
-                'development-title': 'Development Model',
-                'development-content': 'Following a "Research + Computing Power + Application" framework, the Center builds an integrated ecosystem linking scientific innovation, technological transformation, and industrial collaboration.',
-                'development-content2': 'As a key node of China\'s "Eastern Data, Western Computing" initiative, the Center establishes a strategic advantage in aggregating and extending computing resources in Western China.',
-                'features-title': 'Core Advantages',
-                'features-subtitle': 'Green, efficient, and intelligent computing infrastructure',
-                'feature1-title': 'Green Energy',
-                'feature1-desc': 'Leveraging Xinjiang\'s abundant wind and solar energy, operating entirely on clean power with PUE below 1.2.',
-                'feature2-title': 'High Efficiency',
-                'feature2-desc': 'Total computing power of 10,000P with AI-driven scheduling for optimal task allocation and energy consumption balance.',
-                'feature3-title': 'Strategic Node',
-                'feature3-desc': 'Key node of China\'s "Eastern Data, Western Computing" initiative, linking computing resources across regions.',
-                'feature4-title': 'International Cooperation',
-                'feature4-desc': 'Extending computing services to Central Asia, promoting digital cooperation along the Belt and Road.',
-                'stats-title': 'Data Center',
-                'stats-subtitle': 'Advanced data infrastructure with outstanding performance metrics',
-                'stat1-label': 'Total Computing Power',
-                'stat2-label': 'PUE Value',
-                'stat3-label': 'Clean Energy',
-                'stat4-label': 'Academician Leadership',
-                'contact-title': 'Contact Us',
-                'contact-subtitle': 'Feel free to contact us for more information about the Computing Power Center',
-                'address-title': 'Address',
-                'address': 'Changji Mobile IDC Data Center, Changji City, Changji Hui Autonomous Prefecture, Xinjiang Uygur Autonomous Region',
-                'phone-title': 'Phone',
-                'phone': '0994-2292122',
-                'fax-title': 'Fax',
-                'fax': '0994-2292122',
-                'footer-title': 'Xinjiang International Integrated Computing Power Center',
-                'footer-desc': 'A landmark high-performance computing hub in Western China, providing efficient and sustainable computing services.',
-                'quick-links-title': 'Quick Links',
-                'contact-info-title': 'Contact Information',
-                'footer-address': 'Changji City, Changji Hui Autonomous Prefecture, Xinjiang Uygur Autonomous Region',
-                'copyright': '© 2025 Xinjiang International Integrated Computing Power Center. All rights reserved.'
-            }
-        };
+        // 更新品牌名称
+        const brandName = document.getElementById('brand-name');
+        const brandSubtitle = document.getElementById('brand-subtitle');
         
-        function setLanguage(lang) {
-            const elements = document.querySelectorAll('[id]');
-            elements.forEach(element => {
-                const id = element.id;
-                if (translations[lang] && translations[lang][id]) {
-                    element.textContent = translations[lang][id];
-                }
-            });
-            
-            // 更新导航链接文本
-            const navLinks = document.querySelectorAll('nav a');
-            if (lang === 'en') {
-                navLinks[0].textContent = 'Home';
-                navLinks[1].textContent = 'About';
-                navLinks[2].textContent = 'Features';
-                navLinks[3].textContent = 'Data Center';
-                navLinks[4].textContent = 'Contact';
-            } else {
-                navLinks[0].textContent = '首页';
-                navLinks[1].textContent = '中心简介';
-                navLinks[2].textContent = '核心优势';
-                navLinks[3].textContent = '数据中心';
-                navLinks[4].textContent = '联系我们';
-            }
+        if (lang === 'zh') {
+          brandName.textContent = '空天地一体化实验室';
+          brandSubtitle.textContent = 'Integrated Laboratory for Space, Air, and Ground Systems';
+          brandSubtitle.style.display = 'block';
+        } else {
+          brandName.textContent = 'Integrated Laboratory for Space, Air, and Ground Systems';
+          brandSubtitle.style.display = 'none';
         }
         
-        // 初始化语言
-        setLanguage('zh');
-        
-        // 滚动动画
-        const fadeElements = document.querySelectorAll('.fade-in');
-        
-        const fadeInObserver = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('visible');
-                }
-            });
-        }, { threshold: 0.1 });
-        
-        fadeElements.forEach(element => {
-            fadeInObserver.observe(element);
-        });
-        
-        // 平滑滚动
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                
-                const targetId = this.getAttribute('href');
-                if (targetId === '#') return;
-                
-                const targetElement = document.querySelector(targetId);
-                if (targetElement) {
-                    window.scrollTo({
-                        top: targetElement.offsetTop - 80,
-                        behavior: 'smooth'
-                    });
-                }
-            });
-        });
-        
-        // 导航高亮
-        window.addEventListener('scroll', () => {
-            const sections = document.querySelectorAll('section');
-            const navLinks = document.querySelectorAll('nav a');
-            
-            let current = '';
-            sections.forEach(section => {
-                const sectionTop = section.offsetTop;
-                const sectionHeight = section.clientHeight;
-                if (scrollY >= sectionTop - 100) {
-                    current = section.getAttribute('id');
-                }
-            });
-            
-            navLinks.forEach(link => {
-                link.classList.remove('active');
-                if (link.getAttribute('href') === `#${current}`) {
-                    link.classList.add('active');
-                }
-            });
-        });
-    </script>
+        // 更新按钮状态
+        if (lang === 'zh') {
+          btnZh.classList.add('active');
+          btnZh.setAttribute('aria-pressed', 'true');
+          btnEn.classList.remove('active');
+          btnEn.setAttribute('aria-pressed', 'false');
+          document.documentElement.lang = 'zh-CN';
+        } else {
+          btnZh.classList.remove('active');
+          btnZh.setAttribute('aria-pressed', 'false');
+          btnEn.classList.add('active');
+          btnEn.setAttribute('aria-pressed', 'true');
+          document.documentElement.lang = 'en';
+        }
+      }
+
+      // 初始化为中文
+      switchLanguage('zh');
+
+      // 绑定点击事件
+      btnZh.addEventListener('click', () => switchLanguage('zh'));
+      btnEn.addEventListener('click', () => switchLanguage('en'));
+
+    })();
+  </script>
+
 </body>
 </html>
